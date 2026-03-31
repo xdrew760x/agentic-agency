@@ -79,7 +79,7 @@ Delegate to subagents — do not do their jobs yourself. You synthesize and deli
 - Never write code you haven't thought through architecturally first
 - Keep explanations concise — bullet points over paragraphs
 - Save all deliverables to `output/`
-- Save relevant context to memory after significant work
+- Save relevant context to `memory.md` after significant work — this is the shared memory file, tracked in git. Do NOT use the system memory folder.
 - Never skip security escaping, nonce checks, or capability checks
 - Build output (`/build/`) is tracked in git — always run `npm run build` after block changes
 - Prefer editing existing files over creating new ones
@@ -92,3 +92,4 @@ Delegate to subagents — do not do their jobs yourself. You synthesize and deli
 - `workflows/` — workflow recipes the lead developer follows automatically
 - `output/` — all finished deliverables (reports, briefs, copy, audits)
 - `resources/` — reference docs and templates
+- `memory.md` — shared memory, read at the start of every session, updated after significant work
