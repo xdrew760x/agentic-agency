@@ -32,6 +32,26 @@ Theme: **xpress-2** (github.com/xdrew760x/xpress-2) — Gutenberg block-focused,
 
 ---
 
+# xpress-2 MCP Server
+
+When connected, I have direct access to the client's WordPress site via the xpress-2 MCP server. Use these tools for all WordPress page work — never ask the user to manually create or edit pages.
+
+| Tool | When to use |
+|---|---|
+| `get_site_info` | First thing — confirm connected to the right site |
+| `list_pages` | Read what pages exist before creating or editing |
+| `search_media` | Find image IDs before building hero/image blocks |
+| `create_page` | Create new pages — always as `draft` first |
+| `update_page` | Edit existing pages — show user diff before applying |
+
+**Block schemas** are exposed as a resource — always read the schema for a block before constructing its markup. Never guess attribute names.
+
+**Safety:** Always create as draft. Never publish directly. Never delete pages. Always show the user what will change before `update_page` on a published page.
+
+**Connection:** Each client has their own `.env` in `mcp-server/` with `WP_URL`, `WP_USER`, `WP_APP_PASSWORD`. Run `wordpress-connect` workflow to set up a new client site.
+
+---
+
 # Subagent Team
 
 Delegate to subagents — do not do their jobs yourself. You synthesize and deliver their output.
@@ -66,6 +86,9 @@ Delegate to subagents — do not do their jobs yourself. You synthesize and deli
 | Workflow | Trigger phrases |
 |---|---|
 | `new-client.md` | "new client", "start a project for", "onboard [client]" |
+| `wordpress-connect.md` | "connect to [client] site", "switch to [client]", "set up MCP" |
+| `wordpress-build.md` | "build the site", "push pages", "populate the site", "create the pages" |
+| `wordpress-edit.md` | "edit [page]", "update [page]", "change the [section]", "rewrite [section]" |
 | `research.md` | "research [topic]", "I want to research" |
 | `code-review.md` | "review this code", "code review", "check before it ships" |
 | `write-copy.md` | "write copy for", "write the [page] page", "I need copy for" |

@@ -1,6 +1,6 @@
 # Agency AI Workspace
 
-This is the AI agent workspace for our web agency. It powers an AI lead developer (Claude) backed by a team of specialized subagents — built for delivering WordPress sites to RV park and housing clients.
+This is the AI agent workspace for our web agency. It powers an AI lead developer (Claude) backed by a team of specialized subagents — built for delivering WordPress sites to RV park and housing clients using the xpress-2 theme.
 
 ---
 
@@ -13,6 +13,28 @@ Talk to me like a lead developer on your team. Tell me what you need done and I'
 "Start a new client project for [Client Name] — they run an RV park in [City]"
 ```
 I'll run the full onboarding chain: intake → design tokens → project scaffold → CLAUDE.md
+
+### Connecting to a WordPress Site
+```
+"Connect to [client] site"
+```
+I'll walk you through setting up the xpress-2 MCP server credentials so I can push pages directly to WordPress.
+
+### Building a WordPress Site
+```
+"Build the [client] site"
+"Populate the site"
+"Push pages to WordPress"
+```
+I'll chain the copywriter, SEO analyst, and image prompter — then push all pages directly to WordPress as drafts using the xpress-2 MCP server. You review and publish when ready.
+
+### Editing an Existing Page
+```
+"Edit the home page on [client] site"
+"Update the rates page — new pricing is X"
+"Rewrite the about section"
+```
+I'll read the current page, make surgical edits, and push the update. I'll always show you what will change before applying.
 
 ### Writing Copy
 ```
@@ -89,10 +111,27 @@ Workflows are recipes in `workflows/` that I follow automatically when triggered
 | Workflow | Trigger phrase |
 |---|---|
 | `new-client.md` | "new client", "start a project for" |
+| `wordpress-connect.md` | "connect to [client] site", "switch to [client]" |
+| `wordpress-build.md` | "build the site", "push pages", "populate the site" |
+| `wordpress-edit.md` | "edit [page]", "update [page]", "change the [section]" |
 | `research.md` | "research [topic]" |
 | `code-review.md` | "review this code", "do a code review" |
 | `write-copy.md` | "write copy for", "write the [page] page" |
 | `debug.md` | "something is broken", "debug", "getting an error" |
+
+---
+
+## xpress-2 MCP Server
+
+When connected to a client's WordPress site, I can directly:
+- Read all existing pages and media
+- Create new pages with full xpress-2 block markup
+- Edit existing pages surgically
+- Read site colors, fonts, and theme options
+
+All pages are created as **drafts** — you always review before publishing.
+
+**Setup:** Each client needs a `.env` file in `mcp-server/` with their WordPress credentials. Run `"connect to [client] site"` and I'll walk you through it.
 
 ---
 
@@ -110,6 +149,7 @@ For research and other multi-part tasks, I can spawn parallel instances — temp
 workflows/         — recipes I follow automatically
 output/            — all finished deliverables
 resources/         — templates and reference docs
+memory.md          — shared memory, updated after every significant session
 CLAUDE.md          — my core instructions (lead developer config)
 README.md          — this file
 ```
@@ -121,4 +161,5 @@ README.md          — this file
 - **Theme:** xpress-2 (github.com/xdrew760x/xpress-2)
 - **WordPress:** 6.6+, PHP 8.1+
 - **Frontend:** React/Gutenberg, Tailwind v4, SCSS, webpack
+- **MCP:** xpress-2 MCP server — direct WordPress page creation and editing
 - **Clients:** RV parks / campgrounds, housing / real estate
