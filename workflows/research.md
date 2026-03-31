@@ -7,24 +7,32 @@ User says: "research [topic]" or "I want to research [topic]"
 
 ## Steps
 
-### 1. Clarify (only if truly ambiguous)
-- If the topic is broad, ask ONE question: "Any specific angle or audience for this?"
-- If the topic is clear, skip and proceed immediately
+### 1. Clarify
+- If the topic is broad, ask: "Any specific angle or audience for this?"
+- Always ask: "Would you like me to use parallel instances for faster research? (yes/no)"
+  - **Yes** → spawn one parallel instance per sub-topic simultaneously
+  - **No** → delegate to the `researcher` subagent as a single task
 
-### 2. Plan the Research
-Before searching, define:
+### 2. Plan
+Define before delegating:
 - Core question the report should answer
 - 3–5 sub-topics or angles to cover
 - State the plan in a brief bullet list to the user
 
-### 3. Research
-- Run multiple web searches covering each sub-topic
-- Target 8–12 quality sources minimum
-- Prioritize: primary sources, authoritative sites, recent publications
-- Note conflicting viewpoints when they exist
+### 3. Delegate to `researcher` subagent
+The lead developer does NOT run searches directly. Delegate to the `researcher` subagent.
 
-### 4. Synthesize Findings
-Organize raw findings into themes — do not just summarize each source individually
+**If parallel instances enabled:**
+- Spawn one instance per sub-topic simultaneously
+- Each instance searches its topic and returns findings + sources
+- Collect all results, then synthesize
+
+**If parallel instances disabled:**
+- Delegate the full research task to the `researcher` subagent as a single job
+
+### 4. Synthesize
+As lead developer, organize raw findings into themes.
+Do not just pass through the researcher's output — add technical context and implications relevant to web dev / agency work.
 
 ### 5. Write the Report
 Save to: `output/[topic-slug]-report.md`
@@ -35,31 +43,25 @@ Save to: `output/[topic-slug]-report.md`
 Date: [today's date]
 
 ## Executive Summary
-2–4 bullet points covering the most important findings
-
-## Background
-Brief context — what this is and why it matters
+2–4 bullet points — the most important findings
 
 ## Key Findings
-Organized by theme, not by source. Use headers and bullet points.
+Organized by theme. Headers and bullet points.
 
-## Notable Perspectives / Debates
-Any significant disagreements or competing views in the field
-
-## Implications / Takeaways
-What this means practically — especially for web dev / AI adoption context
+## Implications for the Agency
+What this means practically for web dev / RV park / housing client work
 
 ## Sources
-Numbered list with title, URL, and one-line description of what it contributed
+Numbered list: title, URL, one-line contribution
 ```
 
-### 6. Save Context to Memory
-Save a memory entry noting the topic researched and any key facts that may be useful later
+### 6. Save to Memory
+Save a memory entry with the topic and any facts useful in future conversations.
 
 ---
 
 ## Output Rules
 - Bullet points over paragraphs
-- No filler or fluff
+- No filler
 - Every claim tied to a source
 - File saved to `output/` before presenting to user
