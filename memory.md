@@ -36,6 +36,12 @@ _Add new clients here as they are onboarded._
 
 ---
 
+## Pending / To Build Later
+
+- **Server deployment workflow** — user wants to connect to live servers for theme file changes (PHP, CSS, JS, theme.json). Recommended approach: git deployment pipeline (local edit → git push → server auto-pulls) + xpress-2 MCP for page content. Need to build: `server-connect` workflow and a git deployment guide in `resources/`. Do not build until user asks.
+
+---
+
 ## Key Decisions
 
 _Log important architectural or workflow decisions here so future sessions have context._
