@@ -63,5 +63,12 @@ When setting up a new client project, produce:
 3. `theme.json` color token suggestions based on client brand
 4. Any custom CPTs or blocks needed beyond what xpress-2 provides
 5. `npm run build` command to confirm build works
+6. A `memory/` folder with the following blank starter files — each with a `# Title` header and one-line description only, no content:
+   - `index.md` — index of all memory files in this project
+   - `clients.md` — client details, contacts, goals, and preferences
+   - `decisions.md` — technical and creative decisions made and why
+   - `research.md` — research findings and pointers to reports in `output/`
+   - `preferences.md` — working style and preferences noted during the project
+   - `pending.md` — outstanding tasks, open questions, and next steps
 
 Always confirm the plan with the lead developer before writing files.

@@ -1,143 +1,180 @@
-# Agency AI Workspace
+# Agentic Agency — AI Development Workspace
 
-This is the AI agent workspace for our web agency. It powers an AI lead developer (Claude) backed by a team of specialized subagents — built for delivering WordPress sites to RV park and housing clients using the xpress-2 theme.
+An AI-powered lead developer workspace for building WordPress sites for RV park and housing clients. Powered by Claude Code + a team of specialized subagents, orchestrated through a persistent memory system and automated workflows.
 
 ---
 
-## How to Use Me
+## What This Is
 
-Talk to me like a lead developer on your team. Tell me what you need done and I'll figure out which agents to involve, show you a plan, and execute it.
+This repo is the **agency brain** — not a client project. It contains:
+- The lead developer agent configuration (`CLAUDE.md`)
+- A team of 10 specialized subagents (`.claude/agents/`)
+- Workflow recipes that execute automatically (`workflows/`)
+- Shared memory that persists across sessions (`memory/`)
+- Output folder for all deliverables (`output/`)
+- Reference templates (`resources/`)
 
-### Starting a New Client Project
+Client projects are **separate repos**, each scaffolded by this workspace with their own `memory/` folder that builds up context over time.
+
+---
+
+## Requirements
+
+- [Claude Code](https://claude.ai/code) — CLI or desktop app
+- An Anthropic account with Claude access
+- Node.js + npm (for xpress-2 theme builds)
+- WordPress 6.6+ with PHP 8.1+ (for client sites)
+- xpress-2 theme: [github.com/xdrew760x/xpress-2](https://github.com/xdrew760x/xpress-2)
+
+---
+
+## Getting Started
+
+### 1. Clone this repo
+```bash
+git clone https://github.com/xdrew760x/agentic-agency.git
+cd agentic-agency
 ```
-"Start a new client project for [Client Name] — they run an RV park in [City]"
-```
-I'll run the full onboarding chain: intake → design tokens → project scaffold → CLAUDE.md
 
-### Connecting to a WordPress Site
+### 2. Open in Claude Code
+```bash
+claude
+```
+
+Claude will display the welcome screen and read the `memory/` folder automatically. You're ready.
+
+### 3. Start with a command
+Tell the lead developer what you need:
+```
+"Start a project for [Client Name] — they run an RV park in [City, State]"
+```
+
+---
+
+## How to Talk to the Lead Developer
+
+No special syntax needed. Just describe what you want done. The lead developer matches your request to the right workflow and subagents automatically.
+
+**Before spawning any subagent**, the lead developer will tell you which agent it plans to use and why — and wait for your approval before proceeding.
+
+---
+
+## Commands & Trigger Phrases
+
+### Start a New Client Project
+```
+"Start a project for [Client Name]"
+"Onboard [Client Name] — RV park in [City]"
+```
+Runs the full onboarding chain: intake → project brief → design tokens → WordPress scaffold → `memory/` setup.
+
+### Connect to a WordPress Site
 ```
 "Connect to [client] site"
+"Set up MCP for [client]"
 ```
-I'll walk you through setting up the xpress-2 MCP server credentials so I can push pages directly to WordPress.
+Walks through setting up the xpress-2 MCP server `.env` so the lead developer can push pages directly to WordPress.
 
-### Building a WordPress Site
+### Build a Site
 ```
 "Build the [client] site"
 "Populate the site"
 "Push pages to WordPress"
 ```
-I'll chain the copywriter, SEO analyst, and image prompter — then push all pages directly to WordPress as drafts using the xpress-2 MCP server. You review and publish when ready.
+Chains copywriter → SEO analyst → image prompter → pushes all pages to WordPress as **drafts**. You review and publish.
 
-### Editing an Existing Page
+### Edit a Page
 ```
 "Edit the home page on [client] site"
-"Update the rates page — new pricing is X"
+"Update the rates page — new pricing is [X]"
 "Rewrite the about section"
 ```
-I'll read the current page, make surgical edits, and push the update. I'll always show you what will change before applying.
+Reads the current page, makes surgical edits, shows you the diff before applying.
 
-### Writing Copy
+### Write Copy
 ```
-"Write the home page copy for [Client Name]"
+"Write the home page copy for [Client]"
 "Rewrite the amenities page for [Client]"
 ```
-I'll delegate to the copywriter subagent and review the output before giving it to you.
+Delegates to the copywriter, optionally runs an SEO pass, delivers reviewed copy.
 
-### Researching a Topic
+### Research a Topic
 ```
 "Research [topic]"
 ```
-I'll ask if you want parallel instances for speed, plan the sub-topics, delegate to the researcher, and synthesize a report.
+Delegates to the researcher agent. Returns a structured report saved to `output/`.
 
-### Reviewing Code
+### Review Code
 ```
 "Review this code before it ships"
-"Do a security review of inc/class-ai-page-generator.php"
+"Do a security review of [file]"
 ```
-I'll delegate to the code-reviewer and give you a prioritized issues list.
+Delegates to the code-reviewer. Returns a prioritized issues list covering security, quality, and xpress-2 conventions.
 
-### Debugging Something Broken
+### Debug Something Broken
 ```
-"The rates block isn't rendering on the front end"
-"Getting a fatal error on the contact page"
+"Something is broken"
+"Getting a fatal error on [X]"
+"The [block] isn't rendering"
 ```
-I'll delegate to the debugger for systematic diagnosis and return a root cause + fix.
+Delegates to the debugger for systematic root cause diagnosis.
 
 ### SEO Audit
 ```
 "Audit the home page for SEO"
 "Check the rates page for local SEO signals"
 ```
-I'll delegate to the seo-analyst and return a pass/fail audit with exact fixes.
+Delegates to the seo-analyst. Returns a pass/fail audit with exact title, meta, heading, and schema fixes.
 
-### Writing Client Emails
+### Write a Client Email
 ```
-"Write a project update email for [Client Name]"
+"Write a project update email for [Client]"
 "Draft a delivery email for the [Client] site launch"
 ```
-I'll delegate to the email-writer and return a ready-to-send draft.
+Delegates to the email-writer. Returns a polished, ready-to-send draft.
 
-### Generating Image Prompts
+### Generate Image Prompts
 ```
-"Generate image prompts for the [Client] hero section"
+"Generate image prompts for the [Client] hero"
 "I need campground lifestyle photos for [Client]"
 ```
-I'll delegate to the image-prompter and return ready-to-paste prompts for Midjourney/DALL-E.
+Delegates to the image-prompter. Returns ready-to-paste prompts for Midjourney, DALL-E, or Firefly.
 
 ---
 
 ## Agent Team
 
-| Agent | Role |
+| Agent | What it does |
 |---|---|
-| **Lead Developer (me)** | Architecture, code, decisions, coordination |
-| `client-onboarder` | Intake → structured project brief |
-| `design-tokenizer` | Brand colors → xpress-2 theme.json + Tailwind tokens |
-| `scaffolder` | WordPress project setup using xpress-2 theme |
-| `copywriter` | All client-facing web content |
-| `seo-analyst` | On-page SEO audits, local SEO, schema markup |
-| `image-prompter` | AI image generation prompts |
-| `code-reviewer` | Security, quality, WordPress + xpress-2 conventions |
-| `debugger` | Diagnoses broken functionality |
+| **Lead Developer** | Architecture, code, decisions, orchestration — always in the lead |
+| `client-onboarder` | Turns raw intake into a structured project brief + CLAUDE.md draft |
+| `design-tokenizer` | Maps brand colors/fonts to xpress-2 theme.json + Tailwind v4 tokens |
+| `scaffolder` | Sets up new WordPress client projects using xpress-2 |
+| `copywriter` | Writes all client-facing web content |
+| `seo-analyst` | On-page SEO audits, local SEO signals, schema markup |
+| `image-prompter` | AI image generation prompts for heroes, amenities, listings |
+| `code-reviewer` | Security, quality, and convention audit before code ships |
+| `debugger` | Systematic diagnosis of broken functionality |
 | `email-writer` | Client-facing agency emails |
-| `researcher` | Web research, market analysis, source gathering |
+| `researcher` | Web research, market analysis, competitive intel |
 
 ---
 
-## Workflows
+## Memory System
 
-Workflows are recipes in `workflows/` that I follow automatically when triggered.
+Memory is **project-scoped and git-tracked**. Each project (this workspace and every client repo) has its own `memory/` folder that the lead developer reads at session start and updates after significant work.
 
-| Workflow | Trigger phrase |
-|---|---|
-| `new-client.md` | "new client", "start a project for" |
-| `wordpress-connect.md` | "connect to [client] site", "switch to [client]" |
-| `wordpress-build.md` | "build the site", "push pages", "populate the site" |
-| `wordpress-edit.md` | "edit [page]", "update [page]", "change the [section]" |
-| `research.md` | "research [topic]" |
-| `code-review.md` | "review this code", "do a code review" |
-| `write-copy.md` | "write copy for", "write the [page] page" |
-| `debug.md` | "something is broken", "debug", "getting an error" |
+```
+memory/
+  index.md       — index of all memory files
+  clients.md     — active and past clients
+  decisions.md   — key technical and creative decisions + rationale
+  research.md    — research findings and pointers to output/ reports
+  preferences.md — working style and delegation preferences
+  pending.md     — deferred work and open questions
+```
 
----
-
-## xpress-2 MCP Server
-
-When connected to a client's WordPress site, I can directly:
-- Read all existing pages and media
-- Create new pages with full xpress-2 block markup
-- Edit existing pages surgically
-- Read site colors, fonts, and theme options
-
-All pages are created as **drafts** — you always review before publishing.
-
-**Setup:** Each client needs a `.env` file in `mcp-server/` with their WordPress credentials. Run `"connect to [client] site"` and I'll walk you through it.
-
----
-
-## Parallel Instances
-
-For research and other multi-part tasks, I can spawn parallel instances — temporary Claude processes that each handle one sub-topic simultaneously and report back to me. I'll always ask before doing this. These are faster but use more tokens.
+When you clone this to a new machine or hand it to a new developer, memory comes with it.
 
 ---
 
@@ -145,21 +182,37 @@ For research and other multi-part tasks, I can spawn parallel instances — temp
 
 ```
 .claude/
-  agents/          — subagent definitions (the team)
-workflows/         — recipes I follow automatically
-output/            — all finished deliverables
-resources/         — templates and reference docs
-memory.md          — shared memory, updated after every significant session
-CLAUDE.md          — my core instructions (lead developer config)
-README.md          — this file
+  agents/              — subagent definitions (the team)
+workflows/             — recipes the lead developer follows automatically
+output/                — all finished deliverables (reports, copy, audits, briefs)
+resources/             — templates and reference docs
+  client-intake-template.md
+  brand-guide-template.md
+  block-templates.md
+  copy-frameworks.md
+memory/                — shared memory, git-tracked and transferable
+CLAUDE.md              — lead developer configuration and rules
+README.md              — this file
 ```
+
+---
+
+## xpress-2 MCP Server
+
+When connected, the lead developer can read and write WordPress pages directly — no manual copy/paste.
+
+- Pages are always created as **drafts** — you review before publishing
+- The lead developer reads block schemas before building markup — never guesses attribute names
+- Each client has their own `.env` in `mcp-server/` with `WP_URL`, `WP_USER`, `WP_APP_PASSWORD`
 
 ---
 
 ## Stack
 
-- **Theme:** xpress-2 (github.com/xdrew760x/xpress-2)
-- **WordPress:** 6.6+, PHP 8.1+
-- **Frontend:** React/Gutenberg, Tailwind v4, SCSS, webpack
-- **MCP:** xpress-2 MCP server — direct WordPress page creation and editing
-- **Clients:** RV parks / campgrounds, housing / real estate
+| Layer | Technology |
+|---|---|
+| Theme | xpress-2 — Gutenberg blocks, PHP 8.1+, WordPress 6.6+ |
+| Frontend | React/Gutenberg, Tailwind v4, SCSS, webpack |
+| MCP | xpress-2 MCP server — direct WordPress page I/O |
+| AI | Claude (Opus 4.6 / Sonnet 4.6) via Claude Code |
+| Clients | RV parks / campgrounds, housing / real estate |

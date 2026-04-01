@@ -56,7 +56,14 @@ Numbered list: title, URL, one-line contribution
 ```
 
 ### 6. Save to Memory
-Save a memory entry with the topic and any facts useful in future conversations.
+After saving the report, always do both:
+
+1. **Reference memory entry** — add a pointer to the report file in the system memory index (`~/.claude/projects/.../memory/MEMORY.md`) using type `reference`. Format:
+   - Name: `[Topic] Research Report`
+   - Description: one-line summary of what the report covers and why it's useful
+   - Body: path to the file (`output/[topic-slug]-report.md`) and the core question it answers
+
+2. **Project memory entry** (if applicable) — if the research revealed facts that should shape future decisions (e.g., a tool to prefer, a pattern to follow, a competitor to watch), save a `project` memory entry capturing that insight.
 
 ---
 
