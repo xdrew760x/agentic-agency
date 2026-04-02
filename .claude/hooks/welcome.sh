@@ -3,8 +3,12 @@
 # Also stamps a session marker so memory-check.sh knows when this session started
 touch /tmp/agentic_agency_session_start
 
-python3 - << 'PYEOF'
-import json
+LAN_IP=$(ipconfig getifaddr en0 2>/dev/null || echo "unavailable")
+
+python3 - "$LAN_IP" << 'PYEOF'
+import json, sys
+
+lan_ip = sys.argv[1] if len(sys.argv) > 1 else "unavailable"
 
 msg = """\
 ╔══════════════════════════════════════════════════════════════╗
@@ -39,7 +43,11 @@ msg = """\
 
 ──────────────────────────────────────────────────────────────
   Need help?  Just describe what you're working on.
-──────────────────────────────────────────────────────────────"""
+──────────────────────────────────────────────────────────────
+
+  LAN URL:  http://%s:5173
+  Local:    http://localhost:5173
+──────────────────────────────────────────────────────────────""" % lan_ip
 
 print(json.dumps({"systemMessage": msg}))
 PYEOF
