@@ -18,7 +18,7 @@ To build:
 ---
 
 ## Landing Page — Next Steps
-- Generate actual images from the AI prompts in `output/agentic-office-landing-image-prompts.md`
+- Generate actual images from the AI prompts in `public/image-prompts.md`
 - Replace inline SVG placeholders with real generated images
 - Deploy to a real domain (agenticagency.com or similar)
 - Record a video walkthrough of the office for fallback/social

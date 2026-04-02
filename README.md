@@ -51,10 +51,10 @@ node event-server.js  # SSE server on port 4001
 Open `http://localhost:5173` — or `http://<your-ip>:5173` for LAN access.
 
 ### Landing Page
-A static HTML page showcasing the system lives at `output/agentic-office-landing/index.html`. It embeds the live 3D office in the hero section. Serve it on your network:
+A static HTML page showcasing the system lives at `public/index.html`. It embeds the live 3D office in the hero section. Serve it on your network:
 
 ```bash
-cd output/agentic-office-landing
+cd public
 python3 -m http.server 8080 --bind 0.0.0.0
 ```
 
@@ -233,10 +233,11 @@ output/                          — all finished deliverables
     src/                         — scene, avatars, behaviors, event client
     hooks/                       — Claude Code hooks (pre/post tool use, session)
     event-server.js              — SSE server for real-time agent events
-  agentic-office-landing/        — static landing page with live office embed
+  agentic-office-landing/        — (moved to public/)
   [topic]-report.md              — research reports
   [client]-[page]-copy.md        — copy deliverables
 resources/                       — templates and reference docs
+public/                          — landing page + deliverables (preserved outside output/)
 memory/                          — shared memory, git-tracked and transferable
 CLAUDE.md                        — lead developer configuration and rules
 README.md                        — this file
