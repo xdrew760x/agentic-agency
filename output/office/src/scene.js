@@ -23,9 +23,10 @@ export function createScene(canvas) {
   // ── Camera ───────────────────────────────────────────────────────────────
   // Third-person behind Anders: slightly east, looking northwest over his shoulder.
   // alpha=-1.3 | beta=1.22 | radius=6.5 | target=(4, 0.5, -3)
-  const camera = new ArcRotateCamera('cam', -1.3, 1.22, 6.5, new Vector3(4, 0.5, -3), scene);
-  camera.lowerRadiusLimit  = 2;
-  camera.upperRadiusLimit  = 120;
+  // Overview of the GLB office — angled to see inside
+  const camera = new ArcRotateCamera('cam', -Math.PI / 1.8, 1.1, 40, new Vector3(0, 1, 4), scene);
+  camera.lowerRadiusLimit  = 1;
+  camera.upperRadiusLimit  = 200;
   camera.lowerBetaLimit    = 0.2;
   camera.upperBetaLimit    = Math.PI / 2.1;
 

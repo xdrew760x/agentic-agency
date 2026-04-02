@@ -114,8 +114,8 @@ function getLine(lineSet, agentId, task) {
   return pick(pool.generic);
 }
 
-// ── Center table position (Computer Room round table) ─────────────────────
-const TABLE_X = 4, TABLE_Z = 3, SEAT_R = 3.0;
+// ── Meeting table position (north end of office, wood floor) ──────────────
+const TABLE_X = 1, TABLE_Z = 26, SEAT_R = 5.0;
 
 // ── In-flight walk cancel handles + done-sequence timers ──────────────────
 const activeWalkCancels  = {};
@@ -212,42 +212,41 @@ function handleEvent(event, avatarMap, debugLights) {
       const home   = HOME[event.agentId];
       const anders = avatarMap['anders'];
 
-      // ── Pre-task table meeting (non-Anders agents) ──────────────────
+      // ── Full team meeting before every task ─────────────────────────
       if (anders && event.agentId !== 'anders') {
-        cancelAgent('anders');
-        setAvatarState(anders, 'working');
 
-        // Compute two seats at the table — Anders south, agent north
-        const andersTableSeat = { x: TABLE_X, z: TABLE_Z - SEAT_R };
-        const agentTableSeat  = { x: TABLE_X, z: TABLE_Z + SEAT_R };
-
-        feedAction(avatar.agentDef,  'Heading to strategy table');
-        feedAction(anders.agentDef,  'Calling a quick briefing');
-
-        // Walk both to the table simultaneously
-        const cancelAgent2 = walkTo(avatar, agentTableSeat.x, agentTableSeat.z, () => {
-          delete activeWalkCancels[event.agentId];
+        // Walk ALL agents to the meeting table
+        const allIds = AGENTS.map(a => a.id);
+        const n = allIds.length;
+        const seats = allIds.map((_, i) => {
+          const angle = (i / n) * Math.PI * 2 + Math.PI / 2;
+          return { x: TABLE_X + Math.cos(angle) * SEAT_R, z: TABLE_Z + Math.sin(angle) * SEAT_R };
         });
-        activeWalkCancels[event.agentId] = cancelAgent2;
 
-        const cancelAnders = walkTo(anders, andersTableSeat.x, andersTableSeat.z, () => {
-          delete activeWalkCancels['anders'];
+        allIds.forEach((id, i) => {
+          const a = avatarMap[id];
+          if (!a) return;
+          cancelAgent(id);
+          setAvatarState(a, 'working');
+          feedAction(a.agentDef, 'Heading to team meeting');
+          const cancelWalk = walkTo(a, seats[i].x, seats[i].z, () => {
+            delete activeWalkCancels[id];
+          });
+          activeWalkCancels[id] = cancelWalk;
         });
-        activeWalkCancels['anders'] = cancelAnders;
 
-        // After both arrive (~1.2s travel at 3x speed), Anders delegates
-        const TRAVEL_MS = 1200;
+        // After all arrive — Anders briefs the team
+        const TRAVEL_MS = 5000;
 
         activeDoneTimers[`${event.agentId}_briefing`] = setTimeout(() => {
           delete activeDoneTimers[`${event.agentId}_briefing`];
 
-          // Anders speaks delegation line
           const delegateLine = getLine(DELEGATE_LINES, event.agentId, task);
           speak(anders, delegateLine, 3500);
           feedSay(anders.agentDef, delegateLine);
         }, TRAVEL_MS);
 
-        // Agent responds after Anders finishes
+        // Assigned agent responds
         activeDoneTimers[`${event.agentId}_response`] = setTimeout(() => {
           delete activeDoneTimers[`${event.agentId}_response`];
 
@@ -257,37 +256,34 @@ function handleEvent(event, avatarMap, debugLights) {
           if (task) feedAction(avatar.agentDef, task);
         }, TRAVEL_MS + 4000);
 
-        // After exchange, agent walks to desk; Anders returns home
+        // After exchange, ALL agents return to desks; assigned agent starts working
         activeDoneTimers[`${event.agentId}_dispatch`] = setTimeout(() => {
           delete activeDoneTimers[`${event.agentId}_dispatch`];
 
-          // Agent → workstation
-          if (home) {
-            feedAction(avatar.agentDef, 'Heading to workstation');
-            const cancelWork = walkTo(avatar, home.x, home.z, () => {
-              delete activeWalkCancels[event.agentId];
-              setAvatarState(avatar, 'working');
+          allIds.forEach(id => {
+            const a = avatarMap[id];
+            const agentHome = HOME[id];
+            if (!a || !agentHome) return;
 
-              avatar.bubbleText.text  = getLine(START_LINES, event.agentId, task);
-              avatar.bubble.isVisible = true;
-              activeBubbleTimers[event.agentId] = setTimeout(() => {
-                avatar.bubble.isVisible = false;
-              }, 600000);
-            });
-            activeWalkCancels[event.agentId] = cancelWork;
-          }
+            feedAction(a.agentDef, id === event.agentId ? 'Heading to workstation' : 'Returning to desk');
+            const cancelHome = walkTo(a, agentHome.x, agentHome.z, () => {
+              delete activeWalkCancels[id];
 
-          // Anders → his desk
-          const andersHome = HOME['anders'];
-          if (andersHome) {
-            feedAction(anders.agentDef, 'Returning to desk');
-            const cancelAndersHome = walkTo(anders, andersHome.x, andersHome.z, () => {
-              delete activeWalkCancels['anders'];
-              setAvatarState(anders, 'idle');
+              if (id === event.agentId) {
+                // Assigned agent starts working at their desk
+                setAvatarState(a, 'working');
+                a.bubbleText.text  = getLine(START_LINES, id, task);
+                a.bubble.isVisible = true;
+                activeBubbleTimers[id] = setTimeout(() => {
+                  a.bubble.isVisible = false;
+                }, 600000);
+              } else {
+                setAvatarState(a, 'idle');
+              }
             });
-            activeWalkCancels['anders'] = cancelAndersHome;
-          }
-        }, TRAVEL_MS + 7500);
+            activeWalkCancels[id] = cancelHome;
+          });
+        }, TRAVEL_MS + 8000);
 
       } else {
         // Anders himself or fallback — go straight to desk
@@ -343,7 +339,7 @@ function handleEvent(event, avatarMap, debugLights) {
           }, 2000);
         }
 
-        // Walk home after done line finishes
+        // Walk home after done line finishes — via aisle paths
         activeDoneTimers[event.agentId] = setTimeout(() => {
           delete activeDoneTimers[event.agentId];
           delete activeTaskDesc[event.agentId]; // clear task context
@@ -401,14 +397,14 @@ function handleEvent(event, avatarMap, debugLights) {
       if (agentIds.length === 0) break;
 
       // Seats evenly spaced around the table — start from south (closest to Anders' desk)
-      const TABLE_X  = 4, TABLE_Z = 3, SEAT_R = 3.8;
+      const TABLE_X  = 1, TABLE_Z = 26, SEAT_R = 5.0;
       const n        = agentIds.length;
       const seats    = agentIds.map((_, i) => {
         const angle = (i / n) * Math.PI * 2 + Math.PI / 2; // south-first
         return { x: TABLE_X + Math.cos(angle) * SEAT_R, z: TABLE_Z + Math.sin(angle) * SEAT_R };
       });
 
-      // Walk all agents to their seats simultaneously
+      // Walk all agents to their seats via aisle paths
       agentIds.forEach((id, i) => {
         const a = avatarMap[id];
         if (!a) return;
@@ -421,8 +417,8 @@ function handleEvent(event, avatarMap, debugLights) {
         activeWalkCancels[id] = cancelWalk;
       });
 
-      // Speak lines in sequence — first line after travel delay, then one per slot
-      const TRAVEL_MS  = 1500;  // faster walks
+      // Speak lines in sequence — longer travel for waypoint paths
+      const TRAVEL_MS  = 4500;
       const PER_LINE_MS = 5000; // gap between speakers
       lines.forEach((line, i) => {
         const speakerId = agentIds[i % agentIds.length];

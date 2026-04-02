@@ -19,7 +19,8 @@ export function createAvatar(scene, agentDef, guiTexture, shadows, onClickCb) {
 
   // Root transform node — move this to reposition the whole avatar
   const root = new TransformNode(`agent_root_${agentDef.id}`, scene);
-  root.position.set(agentDef.deskPos.x, 0, agentDef.deskPos.z);
+  // Y=1.2 raises avatar to chair-seat height so they look seated
+  root.position.set(agentDef.deskPos.x, 1.2, agentDef.deskPos.z);
   root.rotation.y = agentDef.defaultRotation ?? 0;
 
   // ── Body (capsule-like: tall cylinder) ───────────────────────────────────
@@ -141,7 +142,8 @@ export function createAvatar(scene, agentDef, guiTexture, shadows, onClickCb) {
     mesh.isPickable = true;
   });
 
-  // ── Idle bob animation ────────────────────────────────────────────────────
+  // ── Idle bob animation (bobs around seated Y height) ──────────────────────
+  const SEAT_Y = 2;
   const bobAnim = new Animation(
     `bob_${agentDef.id}`, 'position.y', 30,
     Animation.ANIMATIONTYPE_FLOAT,
@@ -149,9 +151,9 @@ export function createAvatar(scene, agentDef, guiTexture, shadows, onClickCb) {
   );
   const offset = (agentDef.id.charCodeAt(0) % 30) / 30; // stagger
   bobAnim.setKeys([
-    { frame: 0,               value: 0 },
-    { frame: 15 + offset * 5, value: 0.06 },
-    { frame: 30 + offset * 5, value: 0 },
+    { frame: 0,               value: SEAT_Y },
+    { frame: 15 + offset * 5, value: SEAT_Y + 0.06 },
+    { frame: 30 + offset * 5, value: SEAT_Y },
   ]);
   root.animations = [bobAnim];
   scene.beginAnimation(root, 0, 30, true);

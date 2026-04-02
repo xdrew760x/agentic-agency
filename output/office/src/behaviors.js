@@ -3,53 +3,75 @@ import { feedSay, feedThink, feedAction } from './feed.js';
 
 export { feedSay, feedThink, feedAction };
 
-// ── Walk an avatar to a target position (simple lerp per frame) ────────────
+// ── Chair seat height ─────────────────────────────────────────────────────
+const SEAT_Y = 1.8;
+
+// ── Walk an avatar directly to a target position ──────────────────────────
 export function walkTo(avatar, targetX, targetZ, onArrived) {
   avatar.state = 'walking';
   setAvatarBodyColor(avatar, 'walking');
+
+  // Drop to floor for walking
+  avatar.root.position.y = 0;
 
   const target = new Vector3(targetX, 0, targetZ);
   let done     = false;
 
   const observer = avatar.root.getScene().onBeforeRenderObservable.add(() => {
-    const current = avatar.root.position;
+    const current = avatar.root.position.clone();
+    current.y = 0;
     const dir     = target.subtract(current);
     const dist    = dir.length();
 
-    if (dist < 0.08) {
+    if (dist < 0.3) {
       avatar.root.position.x = targetX;
       avatar.root.position.z = targetZ;
+
+      // Raise to seat height if arriving at home desk or meeting table
+      const home = avatar.agentDef.deskPos;
+      const isHome = Math.abs(targetX - home.x) < 1 && Math.abs(targetZ - home.z) < 1;
+      const isTable = targetZ > 20;
+      avatar.root.position.y = (isHome || isTable) ? SEAT_Y : 0;
+
+      // Restore home rotation if returning to desk
+      if (isHome) {
+        avatar.root.rotation.y = avatar.agentDef.defaultRotation ?? 0;
+      }
+
       avatar.root.getScene().onBeforeRenderObservable.remove(observer);
       done = true;
       if (onArrived) onArrived();
       return;
     }
 
-    const step = Math.min(0.14, dist);
+    const step = Math.min(0.18, dist);
     dir.normalize().scaleInPlace(step);
     avatar.root.position.addInPlace(dir);
 
     // Face direction of travel
     if (dir.length() > 0.001) {
-      const angle = Math.atan2(dir.x, dir.z);
-      avatar.root.rotation.y = angle;
+      avatar.root.rotation.y = Math.atan2(dir.x, dir.z);
     }
   });
 
   return () => {
     if (!done) {
-      avatar.state = 'idle'; // reset so next setAvatarState isn't fighting stale 'walking'
+      avatar.state = 'idle';
       avatar.root.getScene().onBeforeRenderObservable.remove(observer);
     }
   };
 }
 
+// ── Alias for compatibility ───────────────────────────────────────────────
+export const walkPath = walkTo;
+export function getPathTo() { return []; }
+export function getPathHome() { return []; }
+export function getPathFromMeeting() { return []; }
+
 // ── Set avatar visual state ────────────────────────────────────────────────
 export function setAvatarState(avatar, state) {
   avatar.state = state;
   setAvatarBodyColor(avatar, state);
-
-  // Update the DOM status panel
   updateStatusRow(avatar.agentDef.id, state);
 }
 
@@ -57,14 +79,12 @@ function setAvatarBodyColor(avatar, state) {
   const baseColor = hexToColor3(avatar.agentDef.color);
 
   if (state === 'working') {
-    // Full emissive = agent color — very visible glow even from far camera
     avatar.body.material.emissiveColor = new Color3(baseColor.r, baseColor.g, baseColor.b);
     avatar.head.material.emissiveColor = new Color3(baseColor.r * 0.6, baseColor.g * 0.6, baseColor.b * 0.6);
   } else if (state === 'walking') {
     avatar.body.material.emissiveColor = new Color3(baseColor.r * 0.4, baseColor.g * 0.4, baseColor.b * 0.4);
     avatar.head.material.emissiveColor = new Color3(0, 0, 0);
   } else {
-    // idle
     avatar.body.material.emissiveColor = new Color3(0, 0, 0);
     avatar.head.material.emissiveColor = new Color3(0, 0, 0);
   }
@@ -75,7 +95,6 @@ export function speak(avatar, text, duration = 5000) {
   avatar.bubbleText.text = text;
   avatar.bubble.isVisible = true;
 
-  // Pulse the bubble width to fit text
   const charWidth = 9;
   const minW      = 160;
   const newW      = Math.max(minW, text.length * charWidth);
