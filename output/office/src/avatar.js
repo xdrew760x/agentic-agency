@@ -61,7 +61,7 @@ export function createAvatar(scene, agentDef, guiTexture, shadows, onClickCb) {
 
   [[-0.1, 0.05], [0.1, 0.05]].forEach(([ex, ey], i) => {
     const eye = MeshBuilder.CreateSphere(`eye_${agentDef.id}_${i}`, { diameter: 0.08, segments: 6 }, scene);
-    eye.position.set(ex, 1.16 + ey, -0.2);
+    eye.position.set(ex, 1.16 + ey, 0.2);
     eye.parent   = root;
     eye.material = eyeMat;
   });

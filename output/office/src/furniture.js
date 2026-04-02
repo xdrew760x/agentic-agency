@@ -57,7 +57,7 @@ function buildMeetingTable(scene) {
 }
 
 // ── Computer workstations ─────────────────────────────────────────────────
-export function buildWorkstation(scene, { id, x, z, screenColor, shadows }) {
+export function buildWorkstation(scene, { id, x, z, screenColor, shadows, facingNorth = false }) {
   const deskMat   = new StandardMaterial(`desk_mat_${id}`, scene);
   deskMat.diffuseColor = new Color3(0.16, 0.16, 0.22);
 
@@ -84,9 +84,14 @@ export function buildWorkstation(scene, { id, x, z, screenColor, shadows }) {
     l.material = legM;
   });
 
+  // For south-facing avatars: monitor on far (south) side, keyboard on near (north) side.
+  // For north-facing avatars (facingNorth): flipped — monitor far (north), keyboard near (south).
+  const monZ = facingNorth ? z + 0.3 : z - 0.3;
+  const kbZ  = facingNorth ? z - 0.15 : z + 0.15;
+
   // Monitor
   const mon = MeshBuilder.CreateBox(`mon_${id}`, { width: 1.1, height: 0.7, depth: 0.06 }, scene);
-  mon.position.set(x, 1.24, z - 0.3);
+  mon.position.set(x, 1.24, monZ);
   mon.material = monMat;
   shadows?.addShadowCaster(mon);
 
@@ -94,14 +99,14 @@ export function buildWorkstation(scene, { id, x, z, screenColor, shadows }) {
   const standM = new StandardMaterial(`stand_mat_${id}`, scene);
   standM.diffuseColor = new Color3(0.08, 0.08, 0.1);
   const stand = MeshBuilder.CreateBox(`stand_${id}`, { width: 0.1, height: 0.28, depth: 0.1 }, scene);
-  stand.position.set(x, 0.9, z - 0.3);
+  stand.position.set(x, 0.9, monZ);
   stand.material = standM;
 
   // Keyboard
   const kbMat = new StandardMaterial(`kb_mat_${id}`, scene);
   kbMat.diffuseColor = new Color3(0.12, 0.12, 0.16);
   const kb = MeshBuilder.CreateBox(`kb_${id}`, { width: 0.9, height: 0.03, depth: 0.32 }, scene);
-  kb.position.set(x, 0.78, z + 0.15);
+  kb.position.set(x, 0.78, kbZ);
   kb.material = kbMat;
 
   return { desk, mon };
@@ -109,39 +114,23 @@ export function buildWorkstation(scene, { id, x, z, screenColor, shadows }) {
 
 // ── Testing room equipment ─────────────────────────────────────────────────
 function buildTestingRoom(scene, shadows) {
-  const deskMat = new StandardMaterial('test_desk_mat', scene);
-  deskMat.diffuseColor = new Color3(0.14, 0.1, 0.1);
-
-  // Main debug workstation — pushed against north wall (zMax=34, inner face=33.875)
-  // Desk depth=1.4 → center at 33.875-0.7=33.175
-  const desk = MeshBuilder.CreateBox('test_desk', { width: 3.5, height: 0.1, depth: 1.4 }, scene);
-  desk.position.set(7, 0.72, 33.2);
-  desk.material = deskMat;
-  desk.receiveShadows = true;
-
-  // Status light panel — on front edge of desk (south face at 33.2-0.7=32.5)
+  // Status light panel — right side of desk surface, away from avatar center
   const lightColors = [
-    { name: 'red_light',   color: new Color3(1, 0.1, 0.1), x: 5.5,  on: true  },
-    { name: 'amber_light', color: new Color3(1, 0.6, 0.0), x: 6.0,  on: false },
-    { name: 'green_light', color: new Color3(0.1, 1, 0.2), x: 6.5,  on: false },
+    { name: 'red_light',   color: new Color3(1, 0.1, 0.1), x: 7.6, on: true  },
+    { name: 'amber_light', color: new Color3(1, 0.6, 0.0), x: 8.0, on: false },
+    { name: 'green_light', color: new Color3(0.1, 1, 0.2), x: 8.4, on: false },
   ];
 
+  const lightMats = {};
   lightColors.forEach(({ name, color, x, on }) => {
     const lMat = new StandardMaterial(`${name}_mat`, scene);
     lMat.diffuseColor  = on ? color : new Color3(color.r * 0.15, color.g * 0.15, color.b * 0.15);
     lMat.emissiveColor = on ? color : new Color3(0, 0, 0);
-    const light = MeshBuilder.CreateSphere(name, { diameter: 0.18, segments: 8 }, scene);
-    light.position.set(x, 1.1, 32.5);
+    const light = MeshBuilder.CreateSphere(name, { diameter: 0.14, segments: 8 }, scene);
+    light.position.set(x, 0.84, 33.15);
     light.material = lMat;
+    lightMats[name] = lMat;
   });
-
-  // Console screen — sitting on desk, facing south into room
-  const consoleMat = new StandardMaterial('console_mat', scene);
-  consoleMat.diffuseColor  = new Color3(0.03, 0.03, 0.04);
-  consoleMat.emissiveColor = new Color3(0.0, 0.2, 0.05);
-  const console_ = MeshBuilder.CreateBox('console_screen', { width: 2.2, height: 1.2, depth: 0.07 }, scene);
-  console_.position.set(7, 1.48, 32.54);
-  console_.material = consoleMat;
 
   // Rack unit — against east wall (xMax=20, inner face=19.875), center of room depth
   const rackMat = new StandardMaterial('rack_mat', scene);
@@ -158,10 +147,13 @@ function buildTestingRoom(scene, shadows) {
     led.position.set(19.5, 0.3 + i * 0.35, 26.58);
     led.material = ledMat;
   }
+
+  return { debugLights: lightMats };
 }
 
 // ── Build all furniture ────────────────────────────────────────────────────
 export function buildFurniture(scene, shadows) {
   buildMeetingTable(scene);
-  buildTestingRoom(scene, shadows);
+  const { debugLights } = buildTestingRoom(scene, shadows);
+  return { debugLights };
 }

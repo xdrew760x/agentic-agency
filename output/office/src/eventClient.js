@@ -56,15 +56,46 @@ const DONE_LINES = {
 // Track active task bubbles so we can clear them on agent-done
 const activeBubbleTimers = {};
 
+// ── Debug status lights ────────────────────────────────────────────────────
+// idle → green on   working → amber on   error → red on
+function setDebugLights(debugLights, state) {
+  if (!debugLights) return;
+  const red   = debugLights['red_light'];
+  const amber = debugLights['amber_light'];
+  const green = debugLights['green_light'];
+  if (!red || !amber || !green) return;
+
+  const on  = (mat, r, g, b) => { mat.diffuseColor.set(r, g, b); mat.emissiveColor.set(r, g, b); };
+  const off = (mat, r, g, b) => { mat.diffuseColor.set(r * 0.12, g * 0.12, b * 0.12); mat.emissiveColor.set(0, 0, 0); };
+
+  if (state === 'working') {
+    off(red,   1, 0.1, 0.1);
+    on(amber,  1, 0.6, 0.0);
+    off(green, 0.1, 1, 0.2);
+  } else if (state === 'error') {
+    on(red,    1, 0.1, 0.1);
+    off(amber, 1, 0.6, 0.0);
+    off(green, 0.1, 1, 0.2);
+  } else {
+    // idle
+    off(red,   1, 0.1, 0.1);
+    off(amber, 1, 0.6, 0.0);
+    on(green,  0.1, 1, 0.2);
+  }
+}
+
 // ── Connect ────────────────────────────────────────────────────────────────
-export function connectEventStream(avatarMap) {
+export function connectEventStream(avatarMap, debugLights) {
+  // Start in idle state — green on
+  setDebugLights(debugLights, 'idle');
+
   const src = new EventSource('/api/events');
 
   src.onmessage = (e) => {
     try {
       const event = JSON.parse(e.data);
       console.log('[office] event received:', event);
-      handleEvent(event, avatarMap);
+      handleEvent(event, avatarMap, debugLights);
     } catch (err) {
       console.warn('[office] event parse error:', err);
     }
@@ -77,7 +108,7 @@ export function connectEventStream(avatarMap) {
 }
 
 // ── Event handler ──────────────────────────────────────────────────────────
-function handleEvent(event, avatarMap) {
+function handleEvent(event, avatarMap, debugLights) {
   if (event.type === 'connected') return;
 
   const avatar = event.agentId ? avatarMap[event.agentId] : null;
@@ -87,6 +118,7 @@ function handleEvent(event, avatarMap) {
     case 'agent-start': {
       if (!avatar) { console.warn('[office] agent-start: no avatar for', event.agentId); break; }
       setAvatarState(avatar, 'working');
+      if (event.agentId === 'debugger') setDebugLights(debugLights, 'working');
       const startLine = START_LINES[event.agentId] ?? 'Working on it.';
 
       // Keep bubble visible for full task — clear any previous timer
@@ -123,6 +155,7 @@ function handleEvent(event, avatarMap) {
       avatar.bubble.isVisible = false;
 
       setAvatarState(avatar, 'idle');
+      if (event.agentId === 'debugger') setDebugLights(debugLights, 'idle');
       const doneLine = DONE_LINES[event.agentId] ?? 'Done.';
       speak(avatar, doneLine, 6000);
       feedSay(avatar.agentDef, doneLine);
@@ -142,6 +175,7 @@ function handleEvent(event, avatarMap) {
     case 'setState': {
       if (!avatar) break;
       setAvatarState(avatar, event.state);
+      if (event.agentId === 'debugger') setDebugLights(debugLights, event.state);
       break;
     }
 

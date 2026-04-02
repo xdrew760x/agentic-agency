@@ -128,9 +128,8 @@ export const AGENTS = [
     role:       'Debugger',
     color:      '#DC2626',
     homeRoom:   'testing',
-    customDesk: true,
     deskPos:    { x: 7, z: 32 },
-    defaultRotation: Math.PI,
+    defaultRotation: 0,
     description: 'Diagnoses broken functionality — reads error logs, traces hooks, finds root causes.',
   },
 ];
@@ -138,7 +137,7 @@ export const AGENTS = [
 // ── Room focus targets for camera ──────────────────────────────────────────
 export const ROOMS = {
   meeting: {
-    label:     'Meeting Room',
+    label:     'Research & Copy',
     camTarget: { x: -24, y: 0, z: 0 },
     camAlpha:  -Math.PI / 2,
     camBeta:   Math.PI / 3.2,

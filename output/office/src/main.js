@@ -18,22 +18,24 @@ const guiTexture = AdvancedDynamicTexture.CreateFullscreenUI('UI', true, scene);
 
 // ── Build world ────────────────────────────────────────────────────────────
 const { whiteboard } = buildOffice(scene, shadows);
-buildFurniture(scene, shadows);
+const { debugLights } = buildFurniture(scene, shadows);
 
-// Build workstations — desk is placed 1.4 units in the direction the avatar faces
-// Facing south (rotation PI): deskZ = z - 1.4
-// Facing north (rotation 0):  deskZ = z + 1.4
+// Build workstations — desk is placed 1.0 unit in front of the avatar.
+// rotation=0 faces +Z (north):  dir=+1, desk north, keyboard/monitor flipped
+// rotation=PI faces -Z (south): dir=-1, desk south, standard keyboard/monitor layout
 // Debugger skipped — custom gear built in buildTestingRoom (customDesk: true)
 AGENTS.forEach(a => {
   if (a.customDesk) return;
-  const dir   = (a.defaultRotation === Math.PI) ? -1 : 1;
-  const deskZ = a.deskPos.z + dir * 1.4;
+  const facingNorth = a.defaultRotation !== Math.PI;
+  const dir   = facingNorth ? 1 : -1;
+  const deskZ = a.deskPos.z + dir * 1.0;
   buildWorkstation(scene, {
     id:          a.id,
     x:           a.deskPos.x,
     z:           deskZ,
     screenColor: hexToColor3(a.color),
     shadows,
+    facingNorth,
   });
 });
 
@@ -54,7 +56,7 @@ buildStatusPanel(AGENTS);
 // ── Live event stream ──────────────────────────────────────────────────────
 // Connects to the office event server (via Vite proxy /api/events).
 // Avatars animate in real time as Claude delegates to subagents.
-connectEventStream(avatarMap);
+connectEventStream(avatarMap, debugLights);
 
 // ── Double-click a floor area → focus camera on that room ─────────────────
 scene.onPointerObservable.add(evt => {
@@ -71,7 +73,7 @@ scene.onPointerObservable.add(evt => {
   } else if (name.includes('test')) {
     animateCamera(camera, { alpha: -Math.PI / 2, beta: Math.PI / 3.2, radius: 22, target: { x: 7, y: 0, z: 27 } });
   } else if (name.includes('comp') || name.includes('desk') || name.includes('mon')) {
-    animateCamera(camera, { alpha: -Math.PI / 2, beta: Math.PI / 3.2, radius: 24, target: { x: 4, y: 0, z: 0 } });
+    animateCamera(camera, { alpha: -1.3, beta: 1.22, radius: 6.5, target: { x: 4, y: 0.5, z: -3 } });
   }
 });
 

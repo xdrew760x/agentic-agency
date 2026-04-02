@@ -340,7 +340,7 @@ export function buildOffice(scene, shadows) {
   buildTestingRoom(scene);
   buildCorridors(scene);
 
-  buildFloorLabel(scene, 'MEETING ROOM',   LAYOUT.meeting.cx,  3);
+  buildFloorLabel(scene, 'RESEARCH & COPY', LAYOUT.meeting.cx,  3);
   buildFloorLabel(scene, 'COMMAND CENTER', LAYOUT.computer.cx, -9);
   buildFloorLabel(scene, 'DESIGN ROOM',   LAYOUT.design.cx,    3);
   buildFloorLabel(scene, 'TESTING ROOM',  LAYOUT.testing.cx,   LAYOUT.testing.cz);

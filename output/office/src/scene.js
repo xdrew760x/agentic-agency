@@ -21,9 +21,10 @@ export function createScene(canvas) {
   scene.fogColor   = new Color3(0.04, 0.04, 0.08);
 
   // ── Camera ───────────────────────────────────────────────────────────────
-  // Start pulled back to see the whole office (x:-35→32, z:-12→34)
-  const camera = new ArcRotateCamera('cam', -Math.PI / 2, Math.PI / 3.2, 90, new Vector3(-2, 0, 10), scene);
-  camera.lowerRadiusLimit  = 8;
+  // Third-person behind Anders: slightly east, looking northwest over his shoulder.
+  // alpha=-1.3 | beta=1.22 | radius=6.5 | target=(4, 0.5, -3)
+  const camera = new ArcRotateCamera('cam', -1.3, 1.22, 6.5, new Vector3(4, 0.5, -3), scene);
+  camera.lowerRadiusLimit  = 2;
   camera.upperRadiusLimit  = 120;
   camera.lowerBetaLimit    = 0.2;
   camera.upperBetaLimit    = Math.PI / 2.1;
