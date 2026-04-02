@@ -1,6 +1,6 @@
 # Agentic Agency — AI Development Workspace
 
-An AI-powered lead developer workspace for building WordPress sites for RV park and housing clients. Powered by Claude Code + a team of specialized subagents, orchestrated through a persistent memory system and automated workflows.
+An AI-powered lead developer workspace for building WordPress sites for RV park and housing clients. Powered by Claude Code + a team of 11 specialized AI agents, orchestrated through a persistent memory system, automated workflows, and a **real-time 3D virtual office**.
 
 ---
 
@@ -13,8 +13,52 @@ This repo is the **agency brain** — not a client project. It contains:
 - Shared memory that persists across sessions (`memory/`)
 - Output folder for all deliverables (`output/`)
 - Reference templates (`resources/`)
+- A **3D virtual office** built with Babylon.js where you can watch agents work in real time (`output/office/`)
+- A **landing page** showcasing the entire system (`output/agentic-office-landing/`)
 
 Client projects are **separate repos**, each scaffolded by this workspace with their own `memory/` folder that builds up context over time.
+
+---
+
+## 3D Virtual Office
+
+The office is a Babylon.js scene that visualizes agent activity in real time. When you delegate a task in Claude Code, the corresponding avatar animates:
+
+- **Pre-task briefing** — Anders (lead dev) and the assigned agent walk to the center table, exchange task-specific dialogue, then the agent heads to their workstation
+- **Working state** — Agents glow at their desks with speech bubbles showing what they're doing
+- **Reporting back** — When done, agents walk to a hallway waypoint, deliver their report, and Anders acknowledges
+- **Dynamic dialogue** — All lines are randomized and interpolated with the actual task description. No two interactions sound the same.
+- **Team Feed** — A live sidebar logs every thought, speech line, and action with timestamps
+
+### Rooms
+| Room | Agents |
+|---|---|
+| Command Center | Anders (Lead Developer) |
+| Research & Copy | Researcher, Copywriter, SEO Analyst, Client Onboarder, Email Writer |
+| Design Room | Design Tokenizer, Image Prompter |
+| Testing Room | Code Reviewer, Scaffolder, Debugger |
+
+### Running the Office
+The office starts automatically when you open Claude Code in this repo (via `SessionStart` hook). To run it manually:
+
+```bash
+cd output/office
+npm install        # first time only
+npm run dev        # Vite on port 5173
+node event-server.js  # SSE server on port 4001
+```
+
+Open `http://localhost:5173` — or `http://<your-ip>:5173` for LAN access.
+
+### Landing Page
+A static HTML page showcasing the system lives at `output/agentic-office-landing/index.html`. It embeds the live 3D office in the hero section. Serve it on your network:
+
+```bash
+cd output/agentic-office-landing
+python3 -m http.server 8080 --bind 0.0.0.0
+```
+
+Then visit `http://<your-ip>:8080`.
 
 ---
 
@@ -182,17 +226,20 @@ When you clone this to a new machine or hand it to a new developer, memory comes
 
 ```
 .claude/
-  agents/              — subagent definitions (the team)
-workflows/             — recipes the lead developer follows automatically
-output/                — all finished deliverables (reports, copy, audits, briefs)
-resources/             — templates and reference docs
-  client-intake-template.md
-  brand-guide-template.md
-  block-templates.md
-  copy-frameworks.md
-memory/                — shared memory, git-tracked and transferable
-CLAUDE.md              — lead developer configuration and rules
-README.md              — this file
+  agents/                        — subagent definitions (the team)
+workflows/                       — recipes the lead developer follows automatically
+output/                          — all finished deliverables
+  office/                        — 3D virtual office (Babylon.js + Vite)
+    src/                         — scene, avatars, behaviors, event client
+    hooks/                       — Claude Code hooks (pre/post tool use, session)
+    event-server.js              — SSE server for real-time agent events
+  agentic-office-landing/        — static landing page with live office embed
+  [topic]-report.md              — research reports
+  [client]-[page]-copy.md        — copy deliverables
+resources/                       — templates and reference docs
+memory/                          — shared memory, git-tracked and transferable
+CLAUDE.md                        — lead developer configuration and rules
+README.md                        — this file
 ```
 
 ---
@@ -213,6 +260,32 @@ When connected, the lead developer can read and write WordPress pages directly �
 |---|---|
 | Theme | xpress-2 — Gutenberg blocks, PHP 8.1+, WordPress 6.6+ |
 | Frontend | React/Gutenberg, Tailwind v4, SCSS, webpack |
+| 3D Office | Babylon.js, Vite, SSE (Server-Sent Events) |
 | MCP | xpress-2 MCP server — direct WordPress page I/O |
-| AI | Claude (Opus 4.6 / Sonnet 4.6) via Claude Code |
+| AI | Claude (Opus 4.6 / Sonnet 4.6 / Haiku 4.5) via Claude Code |
 | Clients | RV parks / campgrounds, housing / real estate |
+
+---
+
+## Architecture
+
+```
+You (human) ──► Claude Code (Lead Dev / Anders)
+                    │
+                    ├── PreToolUse hook ──► event-server (SSE) ──► 3D Office (browser)
+                    │
+                    ├── Agent: researcher
+                    ├── Agent: copywriter
+                    ├── Agent: seo-analyst
+                    ├── Agent: client-onboarder
+                    ├── Agent: email-writer
+                    ├── Agent: design-tokenizer
+                    ├── Agent: image-prompter
+                    ├── Agent: code-reviewer
+                    ├── Agent: scaffolder
+                    └── Agent: debugger
+                    │
+                    ├── PostToolUse hook ──► event-server (SSE) ──► 3D Office (browser)
+                    │
+                    └── Output ──► output/ (reports, copy, audits, briefs, landing page)
+```
