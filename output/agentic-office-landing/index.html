@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Title -->
+  <title>AI Agent Team in a 3D Virtual Office | Agentic Agency</title>
+
+  <!-- Meta -->
+  <meta name="description" content="11 AI agents. One 3D office. Watch them research, write, review, debug, and ship in real time. Built with Babylon.js and Claude Code. See the demo." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://agenticagency.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="A 3D Virtual Office Where AI Agents Ship Real Work" />
+  <meta property="og:description" content="Not a chatbot. Not a prompt. A full AI development team you can watch collaborate in a real-time 3D office. Delegate a task. Watch it get done." />
+  <meta property="og:image" content="https://agenticagency.com/images/og-share.png" />
+  <meta property="og:url" content="https://agenticagency.com/" />
+  <meta property="og:site_name" content="Agentic Agency" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI Agent Team in a 3D Virtual Office | Agentic Agency" />
+  <meta name="twitter:description" content="11 AI agents. One 3D office. Watch them research, write, review, debug, and ship in real time." />
+  <meta name="twitter:image" content="https://agenticagency.com/images/og-share.png" />
+
+  <!-- Preconnect / DNS Prefetch -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://github.com" />
+
+  <!-- Google Fonts: Inter + JetBrains Mono -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" /></noscript>
+
+  <!-- JSON-LD: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Agentic Agency",
+    "url": "https://agenticagency.com",
+    "logo": "https://agenticagency.com/images/logo.png",
+    "description": "A 3D virtual office where 11 AI agents research, write, review, debug, and deliver — visualized in real time with Babylon.js and Claude Code.",
+    "founder": {
+      "@type": "Person",
+      "name": "Anders"
+    },
+    "sameAs": [
+      "https://github.com/xdrew760x/agentic-agency"
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Agentic Agency",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "description": "A multi-agent AI development team working in a 3D virtual office. 11 specialized agents handle research, copywriting, SEO, code review, debugging, and more — orchestrated by a lead developer and visualized in real time.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Real-time 3D visualization of AI agent workflows",
+      "11 specialized AI agents with defined roles",
+      "Claude Code orchestration with subagent delegation",
+      "Server-Sent Events for live activity streaming",
+      "MCP server integration for WordPress and GitHub",
+      "Persistent git-tracked memory across sessions"
+    ],
+    "screenshot": "https://agenticagency.com/images/office-screenshot.png",
+    "softwareRequirements": "Modern web browser with WebGL support"
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this a real working system or a concept demo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It is real. The 3D office visualizes actual Claude Code subagent sessions. When a researcher agent is spawned in the terminal, the Researcher avatar walks to their desk, glows, and surfaces real dialogue. The visualization layer is driven by live events, not pre-recorded animations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is an AI agent team?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A group of specialized AI instances — each with a defined role, tools, and scope — coordinated by a lead agent or human operator. Instead of one general-purpose chatbot, you get a researcher, a copywriter, a debugger, and eight other specialists, each doing what they are built for."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this replace developers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Anders, the lead developer, delegates every task and reviews every deliverable. Agents handle execution — research, first drafts, audits, scaffolding. The human sets strategy, makes judgment calls, and decides what ships."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What tech stack powers this?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Babylon.js for 3D rendering, Claude Code (Opus 4) for agent orchestration, a Node.js SSE server for real-time event streaming, Vite for the frontend build, and MCP servers for WordPress and GitHub integration."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this for my own agency or workflow?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The architecture is modular. The agent definitions, event server, and 3D visualization are separate layers. If you run Claude Code with subagents and session hooks, you can wire up the same event-driven visualization for your own team structure."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the 3D visualization stay in sync with agent activity?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Claude Code session hooks emit events on task start, agent spawn, speech, and completion. These hit a local SSE server which pushes them to the browser. The Babylon.js scene translates each event into agent movement, glow states, and dialogue bubbles with under 100ms latency."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* ========================================================================
+       DESIGN TOKENS
+       ======================================================================== */
+    :root {
+      /* Backgrounds */
+      --color-bg-void:        #050508;
+      --color-bg-base:        #0a0a0f;
+      --color-bg-raised:      #0e0e16;
+      --color-bg-surface:     #111118;
+      --color-bg-surface-alt: #16161f;
+      --color-bg-overlay:     rgba(10, 10, 20, 0.95);
+
+      /* Borders */
+      --color-border-subtle:  rgba(255, 255, 255, 0.05);
+      --color-border-default: rgba(255, 255, 255, 0.08);
+      --color-border-strong:  rgba(255, 255, 255, 0.12);
+      --color-border-solid:   #1e1e2a;
+
+      /* Text */
+      --color-text-primary:   #e5e7eb;
+      --color-text-secondary: #d1d5db;
+      --color-text-muted:     #9ca3af;
+      --color-text-faint:     #6b7280;
+      --color-text-ghost:     #4b5563;
+      --color-text-dim:       #374151;
+      --color-text-white:     #ffffff;
+
+      /* Agent Colors */
+      --color-agent-anders:          #3B82F6;
+      --color-agent-anders-glow:     rgba(59, 130, 246, 0.35);
+      --color-agent-researcher:      #F59E0B;
+      --color-agent-researcher-glow: rgba(245, 158, 11, 0.35);
+      --color-agent-copywriter:      #10B981;
+      --color-agent-copywriter-glow: rgba(16, 185, 129, 0.35);
+      --color-agent-seo:             #14B8A6;
+      --color-agent-seo-glow:        rgba(20, 184, 166, 0.35);
+      --color-agent-onboarder:       #EAB308;
+      --color-agent-onboarder-glow:  rgba(234, 179, 8, 0.35);
+      --color-agent-emailwriter:          #38BDF8;
+      --color-agent-emailwriter-glow:     rgba(56, 189, 248, 0.35);
+      --color-agent-tokenizer:       #A855F7;
+      --color-agent-tokenizer-glow:  rgba(168, 85, 247, 0.35);
+      --color-agent-imageprompter:       #EC4899;
+      --color-agent-imageprompter-glow:  rgba(236, 72, 153, 0.35);
+      --color-agent-reviewer:        #EF4444;
+      --color-agent-reviewer-glow:   rgba(239, 68, 68, 0.35);
+      --color-agent-scaffolder:      #F97316;
+      --color-agent-scaffolder-glow: rgba(249, 115, 22, 0.35);
+      --color-agent-debugger:        #DC2626;
+      --color-agent-debugger-glow:   rgba(220, 38, 38, 0.35);
+
+      /* Agent text-safe variants */
+      --color-agent-anders-text:       #60A5FA;
+      --color-agent-researcher-text:   #FBBF24;
+      --color-agent-copywriter-text:   #34D399;
+      --color-agent-seo-text:          #2DD4BF;
+      --color-agent-onboarder-text:    #FACC15;
+      --color-agent-emailwriter-text:  #7DD3FC;
+      --color-agent-tokenizer-text:    #C084FC;
+      --color-agent-imageprompter-text:#F472B6;
+      --color-agent-reviewer-text:     #F87171;
+      --color-agent-scaffolder-text:   #FB923C;
+      --color-agent-debugger-text:     #F87171;
+
+      /* CTA */
+      --gradient-cta-from:       #3B82F6;
+      --gradient-cta-to:         #8B5CF6;
+      --gradient-cta-hover-from: #60A5FA;
+      --gradient-cta-hover-to:   #A78BFA;
+      --glow-cta:         0 0 24px rgba(59, 130, 246, 0.3), 0 0 48px rgba(139, 92, 246, 0.15);
+      --glow-cta-hover:   0 0 32px rgba(59, 130, 246, 0.45), 0 0 64px rgba(139, 92, 246, 0.25);
+
+      /* Typography */
+      --font-sans:  'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', monospace;
+
+      --text-xs:    clamp(0.6875rem, 0.65rem + 0.1vw, 0.75rem);
+      --text-sm:    clamp(0.75rem, 0.7rem + 0.15vw, 0.875rem);
+      --text-base:  clamp(0.875rem, 0.83rem + 0.2vw, 1rem);
+      --text-lg:    clamp(1rem, 0.93rem + 0.3vw, 1.25rem);
+      --text-xl:    clamp(1.25rem, 1.1rem + 0.5vw, 1.75rem);
+      --text-2xl:   clamp(1.5rem, 1.2rem + 1vw, 2.5rem);
+      --text-3xl:   clamp(2rem, 1.5rem + 1.5vw, 3.25rem);
+      --text-4xl:   clamp(2.5rem, 1.8rem + 2.2vw, 4.5rem);
+      --text-hero:  clamp(3rem, 2rem + 3vw, 5.5rem);
+
+      --font-normal:    400;
+      --font-medium:    500;
+      --font-semibold:  600;
+      --font-bold:      700;
+      --font-extrabold: 800;
+
+      --leading-tight:   1.1;
+      --leading-snug:    1.25;
+      --leading-normal:  1.5;
+      --leading-relaxed: 1.7;
+
+      --tracking-tight:   -0.02em;
+      --tracking-normal:   0;
+      --tracking-wide:     0.05em;
+      --tracking-widest:   0.15em;
+      --tracking-ultra:    0.2em;
+
+      /* Spacing */
+      --space-0:    0;
+      --space-px:   1px;
+      --space-0-5:  2px;
+      --space-1:    4px;
+      --space-1-5:  6px;
+      --space-2:    8px;
+      --space-3:    12px;
+      --space-4:    16px;
+      --space-5:    20px;
+      --space-6:    24px;
+      --space-8:    32px;
+      --space-10:   40px;
+      --space-12:   48px;
+      --space-16:   64px;
+      --space-20:   80px;
+      --space-24:   96px;
+      --space-32:   128px;
+
+      --section-gap:    clamp(64px, 8vw, 128px);
+      --section-gap-lg: clamp(96px, 12vw, 192px);
+
+      --width-content: 768px;
+      --width-wide:    1100px;
+      --width-full:    1400px;
+
+      /* Radius */
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-xl:   16px;
+      --radius-2xl:  24px;
+      --radius-full: 9999px;
+
+      /* Shadows */
+      --shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.4);
+      --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.5);
+      --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.6);
+      --shadow-xl:  0 16px 48px rgba(0, 0, 0, 0.7);
+
+      /* Glows */
+      --glow-sm:      0 0 8px;
+      --glow-md:      0 0 16px;
+      --glow-lg:      0 0 32px;
+      --glow-xl:      0 0 48px;
+      --glow-card:        0 0 1px rgba(255, 255, 255, 0.05), 0 4px 16px rgba(0, 0, 0, 0.5);
+      --glow-card-hover:  0 0 1px rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.6);
+
+      /* Backdrop blur */
+      --blur-sm:    blur(4px);
+      --blur-md:    blur(10px);
+      --blur-lg:    blur(20px);
+
+      /* Gradients */
+      --gradient-hero: linear-gradient(180deg, #050508 0%, #0a0a0f 30%, #0d0d1a 70%, #0a0a0f 100%);
+      --gradient-cta:  linear-gradient(135deg, var(--gradient-cta-from) 0%, var(--gradient-cta-to) 100%);
+      --gradient-cta-hover: linear-gradient(135deg, var(--gradient-cta-hover-from) 0%, var(--gradient-cta-hover-to) 100%);
+      --gradient-text-brand: linear-gradient(135deg, #3B82F6 0%, #A855F7 50%, #EC4899 100%);
+      --gradient-hero-radial: radial-gradient(ellipse 60% 40% at 50% 40%, rgba(59, 130, 246, 0.06) 0%, rgba(139, 92, 246, 0.03) 40%, transparent 70%);
+      --gradient-section-fade: linear-gradient(180deg, transparent 0%, rgba(10, 10, 15, 0.5) 50%, transparent 100%);
+      --gradient-agent-glow: linear-gradient(90deg, transparent 0%, var(--agent-color, #3B82F6) 50%, transparent 100%);
+
+      /* Animation */
+      --duration-instant:   75ms;
+      --duration-fast:      150ms;
+      --duration-normal:    250ms;
+      --duration-slow:      400ms;
+      --duration-slower:    600ms;
+      --duration-entrance:  800ms;
+      --duration-hero:      1200ms;
+      --ease-default:       cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-in:            cubic-bezier(0.4, 0, 1, 1);
+      --ease-out:           cubic-bezier(0, 0, 0.2, 1);
+      --ease-in-out:        cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-spring:        cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth:        cubic-bezier(0.25, 0.1, 0.25, 1);
+      --stagger-base:       80ms;
+      --motion-scale:       1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      :root {
+        --duration-instant: 0ms;
+        --duration-fast: 0ms;
+        --duration-normal: 0ms;
+        --duration-slow: 0ms;
+        --duration-slower: 0ms;
+        --duration-entrance: 0ms;
+        --duration-hero: 0ms;
+        --stagger-base: 0ms;
+        --motion-scale: 0;
+      }
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* ========================================================================
+       RESET & BASE
+       ======================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: var(--font-normal);
+      line-height: var(--leading-normal);
+      color: var(--color-text-primary);
+      background-color: var(--color-bg-base);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ========================================================================
+       SKIP LINK
+       ======================================================================== */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-4);
+      background: var(--gradient-cta);
+      color: var(--color-text-white);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-md);
+      font-weight: var(--font-semibold);
+      z-index: 1000;
+      transition: top var(--duration-fast) var(--ease-default);
+    }
+    .skip-link:focus {
+      top: var(--space-4);
+    }
+
+    /* ========================================================================
+       LAYOUT
+       ======================================================================== */
+    .container {
+      width: 100%;
+      max-width: var(--width-wide);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: var(--space-6);
+      padding-right: var(--space-6);
+    }
+    .container--narrow {
+      max-width: var(--width-content);
+    }
+    .container--full {
+      max-width: var(--width-full);
+    }
+
+    section {
+      padding-top: var(--section-gap);
+      padding-bottom: var(--section-gap);
+    }
+
+    /* ========================================================================
+       NAVIGATION
+       ======================================================================== */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: var(--space-4) var(--space-6);
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .site-nav__brand {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      font-weight: var(--font-bold);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-text-white);
+    }
+
+    .site-nav__links {
+      display: flex;
+      gap: var(--space-6);
+      list-style: none;
+    }
+
+    .site-nav__links a {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      transition: color var(--duration-fast) var(--ease-default);
+    }
+    .site-nav__links a:hover {
+      color: var(--color-text-white);
+    }
+
+
+
+    /* Mobile hamburger */
+    .site-nav__toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      color: var(--color-text-white);
+      padding: var(--space-1) var(--space-2);
+      font-size: var(--text-lg);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    @media (max-width: 640px) {
+      .site-nav__toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .site-nav__links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(10, 10, 15, 0.95);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--color-border-subtle);
+        padding: var(--space-4) var(--space-6);
+      }
+      .site-nav__links.is-open {
+        display: flex;
+      }
+      .site-nav__links li {
+        padding: var(--space-3) 0;
+        border-bottom: 1px solid var(--color-border-subtle);
+      }
+      .site-nav__links li:last-child {
+        border-bottom: none;
+      }
+    }
+
+        /* ========================================================================
+       BUTTONS
+       ======================================================================== */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient-cta);
+      color: var(--color-text-white);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-8);
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-wide);
+      cursor: pointer;
+      box-shadow: var(--glow-cta);
+      transition: box-shadow var(--duration-normal) var(--ease-default), transform var(--duration-fast) var(--ease-default);
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      background: var(--gradient-cta-hover);
+      box-shadow: var(--glow-cta-hover);
+      transform: translateY(-1px);
+    }
+    .btn-primary:focus-visible {
+      outline: 2px solid var(--gradient-cta-hover-from);
+      outline-offset: 2px;
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-6);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      letter-spacing: var(--tracking-wide);
+      cursor: pointer;
+      transition: color var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default);
+      text-decoration: none;
+    }
+    .btn-ghost:hover {
+      color: var(--color-text-primary);
+      border-color: var(--color-border-strong);
+    }
+    .btn-ghost:focus-visible {
+      outline: 2px solid var(--color-text-muted);
+      outline-offset: 2px;
+    }
+
+    /* ========================================================================
+       SECTION HEADINGS
+       ======================================================================== */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      letter-spacing: var(--tracking-ultra);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-title {
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      line-height: var(--leading-snug);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-text-white);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-subtitle {
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      line-height: var(--leading-normal);
+      max-width: 600px;
+    }
+
+    /* ========================================================================
+       HERO
+       ======================================================================== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-32) var(--space-6) var(--section-gap);
+      background: var(--gradient-hero);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-hero-radial);
+      pointer-events: none;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .hero__tagline {
+      font-size: var(--text-lg);
+      font-weight: var(--font-medium);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-6);
+      letter-spacing: var(--tracking-wide);
+    }
+    .hero__tagline span {
+      background: var(--gradient-text-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero h1 {
+      font-size: var(--text-hero);
+      font-weight: var(--font-extrabold);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-text-white);
+      margin-bottom: var(--space-6);
+    }
+
+    .hero__sub {
+      font-size: var(--text-xl);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-normal);
+      margin-bottom: var(--space-10);
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero__ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      justify-content: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .hero__micro {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-faint);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    /* Hero visual — live office embed */
+    .hero__visual {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1400px;
+      aspect-ratio: 16 / 9;
+      margin-top: var(--space-16);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero__visual-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero__visual-dots {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 280px;
+    }
+
+    .hero__visual-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: var(--radius-full);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    .hero__visual-label {
+      position: absolute;
+      bottom: var(--space-4);
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.25); }
+    }
+
+    /* ========================================================================
+       PROBLEM SECTION
+       ======================================================================== */
+    .problem {
+      background: var(--color-bg-raised);
+    }
+
+    .problem__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+
+    @media (min-width: 768px) {
+      .problem__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .pain-card {
+      padding: var(--space-8);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      border-left: 3px solid var(--color-text-faint);
+      transition: border-color var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+    }
+    .pain-card:hover {
+      border-left-color: var(--gradient-cta-from);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pain-card__icon {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-4);
+      opacity: 0.7;
+    }
+
+    .pain-card h3 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text-white);
+      margin-bottom: var(--space-3);
+      line-height: var(--leading-snug);
+    }
+
+    .pain-card p {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      line-height: var(--leading-relaxed);
+    }
+
+    /* ========================================================================
+       HOW IT WORKS
+       ======================================================================== */
+    .workflow {
+      background: var(--color-bg-base);
+    }
+
+    .workflow__steps {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+      margin-top: var(--space-12);
+    }
+
+    @media (min-width: 768px) {
+      .workflow__steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .workflow__steps {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .step-card {
+      position: relative;
+      padding: var(--space-8);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      transition: transform var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default);
+    }
+    .step-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .step-card__number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background: var(--gradient-cta);
+      color: var(--color-text-white);
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      font-weight: var(--font-bold);
+      margin-bottom: var(--space-5);
+    }
+
+    .step-card h3 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text-white);
+      margin-bottom: var(--space-3);
+    }
+
+    .step-card p {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      line-height: var(--leading-relaxed);
+    }
+
+    .step-card__visual {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--color-bg-surface-alt);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-card__visual-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    /* ========================================================================
+       AGENT ROSTER
+       ======================================================================== */
+    .agents {
+      background: var(--color-bg-raised);
+    }
+
+    .agents__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+    }
+
+    @media (min-width: 640px) {
+      .agents__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .agents__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .agent-card {
+      position: relative;
+      padding: var(--space-6);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform var(--duration-normal) var(--ease-default), box-shadow var(--duration-normal) var(--ease-default), border-color var(--duration-normal) var(--ease-default);
+    }
+
+    .agent-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--agent-color), transparent);
+    }
+
+    .agent-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-border-strong);
+      border-color: color-mix(in srgb, var(--agent-color) 30%, transparent);
+      box-shadow: var(--shadow-lg);
+      box-shadow: 0 0 24px color-mix(in srgb, var(--agent-color) 15%, transparent), var(--shadow-lg);
+    }
+
+    .agent-card__header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .agent-card__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: var(--radius-full);
+      background: var(--agent-color);
+      box-shadow: 0 0 8px var(--agent-color);
+      flex-shrink: 0;
+      display: none; /* replaced by avatar */
+    }
+
+    .agent-card__avatar {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 6px var(--agent-color));
+    }
+
+    .agent-card__name {
+      font-size: var(--text-lg);
+      font-weight: var(--font-bold);
+      color: var(--color-text-white);
+    }
+
+    .agent-card__role {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-wide);
+      color: var(--agent-color-text, var(--color-text-muted));
+      margin-bottom: var(--space-3);
+    }
+
+    .agent-card__desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: var(--leading-relaxed);
+    }
+
+    /* Lead card special treatment */
+    .agent-card--lead {
+      grid-column: 1 / -1;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 1024px) {
+      .agent-card--lead {
+        grid-column: 1 / -1;
+        max-width: none;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: var(--space-6);
+        align-items: center;
+      }
+    }
+
+    /* ========================================================================
+       FEATURES
+       ======================================================================== */
+    .features {
+      background: var(--color-bg-base);
+    }
+
+    .features__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+
+    @media (min-width: 768px) {
+      .features__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .features__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .feature-card {
+      padding: var(--space-8);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      transition: border-color var(--duration-normal) var(--ease-default), transform var(--duration-normal) var(--ease-default);
+    }
+    .feature-card:hover {
+      border-color: var(--color-border-strong);
+      transform: translateY(-2px);
+    }
+
+    .feature-card__icon {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-4);
+      opacity: 0.8;
+    }
+
+    .feature-card h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-bold);
+      color: var(--color-text-white);
+      margin-bottom: var(--space-3);
+    }
+
+    .feature-card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: var(--leading-relaxed);
+    }
+
+    /* ========================================================================
+       TECH STACK
+       ======================================================================== */
+    .tech {
+      background: var(--color-bg-raised);
+    }
+
+    .tech__intro {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      margin-top: var(--space-4);
+      margin-bottom: var(--space-12);
+      max-width: 600px;
+    }
+
+    .tech__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    @media (min-width: 768px) {
+      .tech__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .tech__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .tech-card {
+      padding: var(--space-6);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+    }
+
+    .tech-card__badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      letter-spacing: var(--tracking-wide);
+      color: var(--color-agent-anders-text);
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: var(--radius-sm);
+      padding: var(--space-1) var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .tech-card h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-bold);
+      color: var(--color-text-white);
+      margin-bottom: var(--space-3);
+    }
+
+    .tech-card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: var(--leading-relaxed);
+    }
+
+    .tech-card a {
+      color: var(--color-agent-anders-text);
+      text-decoration: underline;
+      text-decoration-color: rgba(96, 165, 250, 0.3);
+      transition: text-decoration-color var(--duration-fast) var(--ease-default);
+    }
+    .tech-card a:hover {
+      text-decoration-color: var(--color-agent-anders-text);
+    }
+
+    /* ========================================================================
+       FAQ
+       ======================================================================== */
+    .faq {
+      background: var(--color-bg-base);
+    }
+
+    .faq__list {
+      margin-top: var(--space-12);
+      max-width: var(--width-content);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .faq-item__question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: var(--space-6) 0;
+      font-family: var(--font-sans);
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      color: var(--color-text-white);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      transition: color var(--duration-fast) var(--ease-default);
+    }
+    .faq-item__question:hover {
+      color: var(--color-agent-anders-text);
+    }
+
+    .faq-item__icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-lg);
+      color: var(--color-text-faint);
+      transition: transform var(--duration-normal) var(--ease-default);
+    }
+
+    .faq-item.active .faq-item__icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-item__answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--duration-slow) var(--ease-default);
+    }
+
+    .faq-item.active .faq-item__answer {
+      display: block;
+      max-height: none;
+    }
+
+    .faq-item__answer p {
+      padding-bottom: var(--space-6);
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      line-height: var(--leading-relaxed);
+      max-width: 640px;
+    }
+
+    /* ========================================================================
+       FOOTER CTA
+       ======================================================================== */
+    .footer-cta {
+      background: var(--color-bg-raised);
+      text-align: center;
+      padding-top: var(--section-gap-lg);
+      padding-bottom: var(--section-gap-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .footer-cta__content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-cta h2 {
+      font-size: var(--text-4xl);
+      font-weight: var(--font-extrabold);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-text-white);
+      margin-bottom: var(--space-4);
+    }
+
+    .footer-cta__sub {
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-10);
+    }
+
+    .footer-cta__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      justify-content: center;
+    }
+
+    /* ========================================================================
+       SITE FOOTER
+       ======================================================================== */
+    .site-footer {
+      padding: var(--space-10) var(--space-6);
+      border-top: 1px solid var(--color-border-subtle);
+      text-align: center;
+    }
+
+    .site-footer p {
+      font-size: var(--text-sm);
+      color: var(--color-text-faint);
+    }
+    .site-footer a {
+      color: var(--color-text-muted);
+      text-decoration: underline;
+      text-decoration-color: rgba(156, 163, 175, 0.3);
+    }
+    .site-footer a:hover {
+      color: var(--color-text-primary);
+    }
+
+    /* ========================================================================
+       SCROLL ANIMATIONS
+       ======================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity var(--duration-entrance) var(--ease-smooth), transform var(--duration-entrance) var(--ease-smooth);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger children */
+    .reveal-stagger > .reveal:nth-child(1) { transition-delay: calc(var(--stagger-base) * 0); }
+    .reveal-stagger > .reveal:nth-child(2) { transition-delay: calc(var(--stagger-base) * 1); }
+    .reveal-stagger > .reveal:nth-child(3) { transition-delay: calc(var(--stagger-base) * 2); }
+    .reveal-stagger > .reveal:nth-child(4) { transition-delay: calc(var(--stagger-base) * 3); }
+    .reveal-stagger > .reveal:nth-child(5) { transition-delay: calc(var(--stagger-base) * 4); }
+    .reveal-stagger > .reveal:nth-child(6) { transition-delay: calc(var(--stagger-base) * 5); }
+    .reveal-stagger > .reveal:nth-child(7) { transition-delay: calc(var(--stagger-base) * 6); }
+    .reveal-stagger > .reveal:nth-child(8) { transition-delay: calc(var(--stagger-base) * 7); }
+    .reveal-stagger > .reveal:nth-child(9) { transition-delay: calc(var(--stagger-base) * 8); }
+    .reveal-stagger > .reveal:nth-child(10) { transition-delay: calc(var(--stagger-base) * 9); }
+    .reveal-stagger > .reveal:nth-child(11) { transition-delay: calc(var(--stagger-base) * 10); }
+    .reveal-stagger > .reveal:nth-child(12) { transition-delay: calc(var(--stagger-base) * 11); }
+
+    /* Hero entrance */
+    .hero .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+    }
+    .hero .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hero .reveal:nth-child(1) { transition-delay: 0ms; }
+    .hero .reveal:nth-child(2) { transition-delay: 150ms; }
+    .hero .reveal:nth-child(3) { transition-delay: 300ms; }
+    .hero .reveal:nth-child(4) { transition-delay: 450ms; }
+    .hero .reveal:nth-child(5) { transition-delay: 600ms; }
+    .hero .reveal:nth-child(6) { transition-delay: 750ms; }
+  </style>
+</head>
+
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="site-nav" aria-label="Primary navigation">
+    <span class="site-nav__brand">Agentic Agency</span>
+    <button class="site-nav__toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation menu">
+      <span aria-hidden="true">&#9776;</span>
+    </button>
+    <ul class="site-nav__links" id="nav-links">
+      <li><a href="#workflow">How It Works</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#tech">Stack</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="https://github.com/xdrew760x/agentic-agency" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero__content">
+        <p class="hero__tagline reveal"><span>Your AI team works in the dark. This one works in glass.</span></p>
+        <h1 id="hero-heading" class="reveal">An AI Agent Team That Works in a Glass Office</h1>
+        <p class="hero__sub reveal">A full AI agent team &mdash; 11 specialists in one 3D virtual office. They research, write, review, debug, and deliver while you watch every step.</p>
+        <div class="hero__ctas reveal">
+          <a href="#workflow" class="btn-primary">Watch It Work</a>
+          <a href="https://github.com/xdrew760x/agentic-agency" target="_blank" rel="noopener noreferrer" class="btn-ghost">View on GitHub</a>
+        </div>
+        <p class="hero__micro reveal">Built with Babylon.js + Claude Code. No smoke. No mirrors.</p>
+      </div>
+      <div class="hero__visual reveal" aria-label="Live 3D virtual office built with Babylon.js">
+        <iframe src="http://192.168.254.128:5173" title="Agentic Agency — Live 3D Office" style="width:100%;height:100%;border:none;border-radius:var(--radius-lg);" loading="lazy" allow="accelerometer"></iframe>
+      </div>
+    </section>
+
+    <!-- ===== PROBLEM ===== -->
+    <section class="problem" id="problem" aria-labelledby="problem-heading">
+      <div class="container">
+        <p class="section-label reveal">The problem</p>
+        <h2 class="section-title reveal" id="problem-heading">The Problem With Black-Box AI Tools</h2>
+        <div class="problem__grid reveal-stagger">
+          <article class="pain-card reveal">
+            <div class="pain-card__icon" aria-hidden="true">//</div>
+            <h3>Copy. Paste. Pray.</h3>
+            <p>You paste into ChatGPT. Copy the output into Cursor. Manually review the result. Repeat until something works. That is not a system. That is a workaround.</p>
+          </article>
+          <article class="pain-card reveal">
+            <div class="pain-card__icon" aria-hidden="true">||</div>
+            <h3>Powerful Alone. Useless Together.</h3>
+            <p>Every AI tool you use is a silo. Your researcher does not talk to your copywriter. Your debugger does not know what your scaffolder built. There is no agentic workflow &mdash; just you as the glue, stretched thin.</p>
+          </article>
+          <article class="pain-card reveal">
+            <div class="pain-card__icon" aria-hidden="true">?_</div>
+            <h3>You Cannot See What It Is Doing.</h3>
+            <p>You type a prompt. You wait. Something comes back. Was it thinking? Was it stuck? Was it hallucinating? You have no idea. Black-box AI asks you to trust the void.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="workflow" id="workflow" aria-labelledby="workflow-heading">
+      <div class="container">
+        <p class="section-label reveal">How it works</p>
+        <h2 class="section-title reveal" id="workflow-heading">How the AI Agent Team Works</h2>
+        <p class="section-subtitle reveal">One task in. Finished work out. A multi-agent system where everything is visible in between.</p>
+        <div class="workflow__steps reveal-stagger">
+          <article class="step-card reveal">
+            <div class="step-card__number">01</div>
+            <h3>Briefing</h3>
+            <p>Anders, the lead developer, receives your task and calls the relevant agents to the center table. The team gathers. The scope is set.</p>
+            <div class="step-card__visual" role="img" aria-label="AI agent team gathering at the center table for a task briefing">
+              <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                <rect width="320" height="240" fill="#0d0d14"/>
+                <!-- Table -->
+                <ellipse cx="160" cy="130" rx="40" ry="18" fill="#1a1a28" stroke="#2a2a3a" stroke-width="1"/>
+                <!-- Anders (blue) south -->
+                <circle cx="160" cy="165" r="6" fill="#3B82F6" opacity="0.85"/><rect x="153" y="171" width="14" height="18" rx="7" fill="#3B82F6"/>
+                <!-- Researcher (yellow) north -->
+                <circle cx="160" cy="95" r="6" fill="#F59E0B" opacity="0.85"/><rect x="153" y="101" width="14" height="18" rx="7" fill="#F59E0B"/>
+                <!-- Copywriter (green) left -->
+                <circle cx="108" cy="130" r="6" fill="#10B981" opacity="0.85"/><rect x="101" y="136" width="14" height="18" rx="7" fill="#10B981"/>
+                <!-- SEO (teal) right -->
+                <circle cx="212" cy="130" r="6" fill="#14B8A6" opacity="0.85"/><rect x="205" y="136" width="14" height="18" rx="7" fill="#14B8A6"/>
+                <!-- Glow effects -->
+                <circle cx="160" cy="165" r="16" fill="#3B82F6" opacity="0.08"/>
+                <circle cx="160" cy="95" r="16" fill="#F59E0B" opacity="0.08"/>
+                <!-- Speech bubble from Anders -->
+                <rect x="180" y="150" width="80" height="20" rx="6" fill="#1e1e30" stroke="#3B82F6" stroke-width="0.5" opacity="0.9"/>
+                <text x="190" y="164" fill="#93c5fd" font-size="8" font-family="monospace">New task...</text>
+              </svg>
+            </div>
+          </article>
+          <article class="step-card reveal">
+            <div class="step-card__number">02</div>
+            <h3>Assignment</h3>
+            <p>Each agent gets their piece. The Researcher pulls market data. The Copywriter takes the brief. The SEO Analyst maps keywords. They walk to their workstations.</p>
+            <div class="step-card__visual" role="img" aria-label="AI agent walking to their workstation after receiving a task assignment">
+              <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                <rect width="320" height="240" fill="#0d0d14"/>
+                <!-- Desk -->
+                <rect x="220" y="90" width="50" height="30" rx="4" fill="#1a1a28" stroke="#2a2a3a" stroke-width="1"/>
+                <rect x="230" y="85" width="30" height="20" rx="2" fill="#111118" stroke="#F59E0B" stroke-width="0.5"/>
+                <!-- Walking agent with motion trail -->
+                <circle cx="100" cy="130" r="4" fill="#F59E0B" opacity="0.15"/>
+                <circle cx="120" cy="125" r="4" fill="#F59E0B" opacity="0.25"/>
+                <circle cx="140" cy="120" r="5" fill="#F59E0B" opacity="0.4"/>
+                <circle cx="165" cy="113" r="6" fill="#F59E0B" opacity="0.85"/><rect x="158" y="119" width="14" height="18" rx="7" fill="#F59E0B"/>
+                <!-- Dotted path -->
+                <line x1="170" y1="115" x2="235" y2="105" stroke="#F59E0B" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.3"/>
+                <!-- Anders at table watching -->
+                <circle cx="80" cy="170" r="6" fill="#3B82F6" opacity="0.85"/><rect x="73" y="176" width="14" height="18" rx="7" fill="#3B82F6"/>
+                <circle cx="80" cy="170" r="14" fill="#3B82F6" opacity="0.06"/>
+              </svg>
+            </div>
+          </article>
+          <article class="step-card reveal">
+            <div class="step-card__number">03</div>
+            <h3>Execution</h3>
+            <p>Agents glow while working. Speech bubbles surface their reasoning in real time. You see what they are thinking, what they are building, and where they are in the process.</p>
+            <div class="step-card__visual" role="img" aria-label="Copywriter agent glowing while working at their desk in the 3D office">
+              <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                <rect width="320" height="240" fill="#0d0d14"/>
+                <!-- Desk -->
+                <rect x="130" y="110" width="60" height="35" rx="4" fill="#1a1a28" stroke="#2a2a3a" stroke-width="1"/>
+                <rect x="140" y="102" width="40" height="26" rx="2" fill="#111118" stroke="#10B981" stroke-width="0.5"/>
+                <!-- Code lines on screen -->
+                <line x1="145" y1="110" x2="170" y2="110" stroke="#10B981" stroke-width="1" opacity="0.6"/>
+                <line x1="145" y1="114" x2="165" y2="114" stroke="#10B981" stroke-width="1" opacity="0.4"/>
+                <line x1="145" y1="118" x2="172" y2="118" stroke="#10B981" stroke-width="1" opacity="0.5"/>
+                <!-- Agent (glowing) -->
+                <circle cx="160" cy="160" r="6" fill="#10B981" opacity="0.85"/><rect x="153" y="166" width="14" height="18" rx="7" fill="#10B981"/>
+                <!-- Glow rings -->
+                <circle cx="160" cy="170" r="22" fill="none" stroke="#10B981" stroke-width="0.5" opacity="0.2"><animate attributeName="r" values="22;28;22" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.2;0.05;0.2" dur="2s" repeatCount="indefinite"/></circle>
+                <circle cx="160" cy="170" r="32" fill="none" stroke="#10B981" stroke-width="0.3" opacity="0.1"><animate attributeName="r" values="32;38;32" dur="2s" repeatCount="indefinite"/></circle>
+                <!-- Thought bubble -->
+                <rect x="185" y="140" width="100" height="24" rx="6" fill="#1e1e30" stroke="#10B981" stroke-width="0.5" opacity="0.85"/>
+                <text x="193" y="155" fill="#6ee7b7" font-size="7" font-family="monospace" font-style="italic">Writing hero copy...</text>
+              </svg>
+            </div>
+          </article>
+          <article class="step-card reveal">
+            <div class="step-card__number">04</div>
+            <h3>Delivery</h3>
+            <p>Agents return to the table with finished work. Output is assembled. Anders reviews, approves, or sends it back. Nothing ships without a human in the loop.</p>
+            <div class="step-card__visual" role="img" aria-label="AI agents returning to the center table with completed deliverables">
+              <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                <rect width="320" height="240" fill="#0d0d14"/>
+                <!-- Table -->
+                <ellipse cx="160" cy="130" rx="40" ry="18" fill="#1a1a28" stroke="#2a2a3a" stroke-width="1"/>
+                <!-- Document on table -->
+                <rect x="148" y="122" width="24" height="16" rx="2" fill="#1a1a28" stroke="#6ee7b7" stroke-width="0.5"/>
+                <line x1="152" y1="127" x2="168" y2="127" stroke="#6ee7b7" stroke-width="0.5" opacity="0.6"/>
+                <line x1="152" y1="131" x2="164" y2="131" stroke="#6ee7b7" stroke-width="0.5" opacity="0.4"/>
+                <!-- Anders (blue) receiving -->
+                <circle cx="160" cy="165" r="6" fill="#3B82F6" opacity="0.85"/><rect x="153" y="171" width="14" height="18" rx="7" fill="#3B82F6"/>
+                <!-- Researcher reporting -->
+                <circle cx="130" cy="105" r="6" fill="#F59E0B" opacity="0.85"/><rect x="123" y="111" width="14" height="18" rx="7" fill="#F59E0B"/>
+                <!-- Copywriter reporting -->
+                <circle cx="190" cy="105" r="6" fill="#10B981" opacity="0.85"/><rect x="183" y="111" width="14" height="18" rx="7" fill="#10B981"/>
+                <!-- Speech bubble — done -->
+                <rect x="60" y="90" width="65" height="20" rx="6" fill="#1e1e30" stroke="#F59E0B" stroke-width="0.5" opacity="0.9"/>
+                <text x="68" y="104" fill="#fcd34d" font-size="8" font-family="monospace">Report ready.</text>
+                <!-- Checkmark -->
+                <circle cx="160" cy="130" r="6" fill="#10B981" opacity="0.15"/>
+                <path d="M156 130 L159 133 L165 127" stroke="#6ee7b7" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AGENT ROSTER ===== -->
+    <section class="agents" id="agents" aria-labelledby="agents-heading">
+      <div class="container">
+        <p class="section-label reveal">The team</p>
+        <h2 class="section-title reveal" id="agents-heading">Meet the 11 AI Agents</h2>
+        <div class="agents__grid reveal-stagger">
+
+          <!-- Anders — Lead -->
+          <article class="agent-card agent-card--lead reveal" style="--agent-color: var(--color-agent-anders); --agent-color-text: var(--color-agent-anders-text);">
+            <div>
+              <div class="agent-card__header">
+                <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#3B82F6" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#3B82F6"/></svg>
+                <span class="agent-card__name">Anders</span>
+              </div>
+              <p class="agent-card__role">Lead Developer &mdash; Owns the plan. Runs the team.</p>
+              <p class="agent-card__desc">Delegates every task, reviews every deliverable, and makes the final call. The human in the loop.</p>
+            </div>
+          </article>
+
+          <!-- Researcher -->
+          <article class="agent-card reveal" style="--agent-color: var(--color-agent-researcher); --agent-color-text: var(--color-agent-researcher-text);">
+            <div class="agent-card__header">
+              <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#F59E0B" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#F59E0B"/></svg>
+              <span class="agent-card__name">Researcher</span>
+            </div>
+            <p class="agent-card__role">Finds what you need to know.</p>
+            <p class="agent-card__desc">Pulls market data, competitor analysis, and background intel &mdash; then delivers a structured report with sources.</p>
+          </article>
+
+          <!-- Copywriter -->
+          <article class="agent-card reveal" style="--agent-color: var(--color-agent-copywriter); --agent-color-text: var(--color-agent-copywriter-text);">
+            <div class="agent-card__header">
+              <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#10B981" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#10B981"/></svg>
+              <span class="agent-card__name">Copywriter</span>
+            </div>
+            <p class="agent-card__role">Writes copy that converts.</p>
+            <p class="agent-card__desc">Drafts client-facing web copy tuned to audience and brand voice. Headlines, pages, CTAs &mdash; all from the brief.</p>
+          </article>
+
+          <!-- SEO Analyst -->
+          <article class="agent-card reveal" style="--agent-color: var(--color-agent-seo); --agent-color-text: var(--color-agent-seo-text);">
+            <div class="agent-card__header">
+              <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#14B8A6" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#14B8A6"/></svg>
+              <span class="agent-card__name">SEO Analyst</span>
+            </div>
+            <p class="agent-card__role">Makes the copy findable.</p>
+            <p class="agent-card__desc">Audits pages for on-page SEO, maps keywords to content, and optimizes meta tags and schema markup.</p>
+          </article>
+
+          <!-- Client Onboarder -->
+          <article class="agent-card reveal" style="--agent-color: var(--color-agent-onboarder); --agent-color-text: var(--color-agent-onboarder-text);">
+            <div class="agent-card__header">
+              <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#EAB308" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#EAB308"/></svg>
+              <span class="agent-card__name">Client Onboarder</span>
+            </div>
+            <p class="agent-card__role">Turns intake into a project brief.</p>
+            <p class="agent-card__desc">Processes raw client information and produces a structured brief &mdash; pages needed, tone, audience, open questions.</p>
+          </article>
+
+          <!-- Email Writer -->
+          <article class="agent-card reveal" style="--agent-color: var(--color-agent-emailwriter); --agent-color-text: var(--color-agent-emailwriter-text);">
+            <div class="agent-card__header">
+              <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#38BDF8" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#38BDF8"/></svg>
+              <span class="agent-card__name">Email Writer</span>
+            </div>
+            <p class="agent-card__role">Handles every client email.</p>
+            <p class="agent-card__desc">Drafts professional proposals, status updates, and delivery notes. Consistent voice, zero back-and-forth.</p>
+          </article>
+
+          <!-- Design Tokenizer -->
+          <article class="agent-card reveal" style="--agent-color: var(--color-agent-tokenizer); --agent-color-text: var(--color-agent-tokenizer-text);">
+            <div class="agent-card__header">
+              <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#A855F7" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#A855F7"/></svg>
+              <span class="agent-card__name">Design Tokenizer</span>
+            </div>
+            <p class="agent-card__role">Maps brands to code.</p>
+            <p class="agent-card__desc">Translates colors, fonts, and brand assets into theme tokens and Tailwind variables the codebase can use.</p>
+          </article>
+
+          <!-- Image Prompter -->
+          <article class="agent-card reveal" style="--agent-color: var(--color-agent-imageprompter); --agent-color-text: var(--color-agent-imageprompter-text);">
+            <div class="agent-card__header">
+              <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#EC4899" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#EC4899"/></svg>
+              <span class="agent-card__name">Image Prompter</span>
+            </div>
+            <p class="agent-card__role">Generates the right visual.</p>
+            <p class="agent-card__desc">Writes targeted AI image prompts for hero sections, amenity photos, property listings, and marketing assets.</p>
+          </article>
+
+          <!-- Code Reviewer -->
+          <article class="agent-card reveal" style="--agent-color: var(--color-agent-reviewer); --agent-color-text: var(--color-agent-reviewer-text);">
+            <div class="agent-card__header">
+              <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#EF4444" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#EF4444"/></svg>
+              <span class="agent-card__name">Code Reviewer</span>
+            </div>
+            <p class="agent-card__role">Catches what you missed.</p>
+            <p class="agent-card__desc">Audits code for security holes, WordPress standards violations, and logic errors before anything ships.</p>
+          </article>
+
+          <!-- Scaffolder -->
+          <article class="agent-card reveal" style="--agent-color: var(--color-agent-scaffolder); --agent-color-text: var(--color-agent-scaffolder-text);">
+            <div class="agent-card__header">
+              <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#F97316" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#F97316"/></svg>
+              <span class="agent-card__name">Scaffolder</span>
+            </div>
+            <p class="agent-card__role">Spins up projects fast.</p>
+            <p class="agent-card__desc">Sets up WordPress client projects from scratch &mdash; file structure, theme config, boilerplate &mdash; ready to build on.</p>
+          </article>
+
+          <!-- Debugger -->
+          <article class="agent-card reveal" style="--agent-color: var(--color-agent-debugger); --agent-color-text: var(--color-agent-debugger-text);">
+            <div class="agent-card__header">
+              <svg class="agent-card__avatar" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="8" fill="#DC2626" opacity="0.85"/><rect x="14" y="22" width="20" height="24" rx="10" fill="#DC2626"/></svg>
+              <span class="agent-card__name">Debugger</span>
+            </div>
+            <p class="agent-card__role">Finds the root cause.</p>
+            <p class="agent-card__desc">Reads error logs, traces hook conflicts, isolates broken functionality, and recommends the fix. No guessing.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="features" id="features" aria-labelledby="features-heading">
+      <div class="container">
+        <p class="section-label reveal">Features</p>
+        <h2 class="section-title reveal" id="features-heading">Features of the 3D AI Workspace</h2>
+        <div class="features__grid reveal-stagger">
+
+          <article class="feature-card reveal">
+            <div class="feature-card__icon" aria-hidden="true">&#9670;</div>
+            <h3>Real-Time 3D Visualization</h3>
+            <p>Watch agents move through a fully rendered Babylon.js office. They walk to workstations, glow when active, gather for briefings, and return with results. This is not a diagram. It is a live system.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-card__icon" aria-hidden="true">&#9688;</div>
+            <h3>Dynamic Speech and Thought Bubbles</h3>
+            <p>Agents surface their reasoning as they work. You see the Researcher weighing data sources. The Copywriter testing headline options. The Debugger tracing a hook conflict. Visible thinking, not hidden inference.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-card__icon" aria-hidden="true">&#9656;</div>
+            <h3>Task-Aware Behavior</h3>
+            <p>Agents do not follow scripts. Their movement, dialogue, and status respond to real Claude Code sessions happening underneath. When a researcher is spawned, the Researcher walks to the desk and starts working. Real events. Real motion.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-card__icon" aria-hidden="true">&#9654;&#9654;</div>
+            <h3>Parallel Workflows</h3>
+            <p>Multiple agents work simultaneously. The Copywriter drafts while the SEO Analyst maps keywords. The Debugger patches a conflict while the Code Reviewer waits for the diff. No bottleneck. No queue.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-card__icon" aria-hidden="true">&#9650;</div>
+            <h3>Structured Delegation</h3>
+            <p>Every task flows through the lead developer &mdash; the way a real AI development team should work. Anders breaks work into pieces, assigns the right agent, and reviews the output. The hierarchy is clear. The chain of responsibility is visible.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-card__icon" aria-hidden="true">&#9679;</div>
+            <h3>Persistent Memory</h3>
+            <p>Agents share context across sessions. Client preferences, past decisions, research findings &mdash; all stored in git-tracked memory files. No re-explaining. No lost context between conversations.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TECHNICAL ARCHITECTURE ===== -->
+    <section class="tech" id="tech" aria-labelledby="tech-heading">
+      <div class="container">
+        <p class="section-label reveal">Under the hood</p>
+        <h2 class="section-title reveal" id="tech-heading">Technical Architecture</h2>
+        <p class="tech__intro reveal">This is the stack behind an AI automation agency that runs in your browser.</p>
+        <div class="tech__grid reveal-stagger">
+
+          <article class="tech-card reveal">
+            <span class="tech-card__badge">3D Engine</span>
+            <h3>Babylon.js</h3>
+            <p>Real-time WebGL rendering. Agent meshes with positional audio zones, glow layers, dynamic pathfinding, and camera systems that follow the action. Not a recording &mdash; a live scene. <a href="https://www.babylonjs.com/" target="_blank" rel="noopener noreferrer">babylonjs.com</a></p>
+          </article>
+
+          <article class="tech-card reveal">
+            <span class="tech-card__badge">Orchestration</span>
+            <h3>Claude Code</h3>
+            <p>The lead developer delegates via structured subagent prompts. Each agent runs as a scoped Claude Code instance with its own system prompt, tools, and output targets. Session hooks fire SSE events that drive the 3D layer. <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank" rel="noopener noreferrer">Anthropic docs</a></p>
+          </article>
+
+          <article class="tech-card reveal">
+            <span class="tech-card__badge">Real-Time</span>
+            <h3>Server-Sent Events</h3>
+            <p>A lightweight Node.js event server bridges Claude Code sessions to the browser. Agent activity &mdash; task start, speech, movement, completion &mdash; streams to the frontend in real time. No polling. No WebSocket overhead.</p>
+          </article>
+
+          <article class="tech-card reveal">
+            <span class="tech-card__badge">Frontend</span>
+            <h3>Vite + Vanilla JS</h3>
+            <p>Zero-framework frontend. Vite for dev and build. Vanilla JavaScript driving Babylon.js. Fast cold starts. Small bundle. No React. No abstraction tax.</p>
+          </article>
+
+          <article class="tech-card reveal">
+            <span class="tech-card__badge">Integration</span>
+            <h3>MCP Servers</h3>
+            <p>Agents connect to WordPress, GitHub, and design tools through <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">Model Context Protocol</a> servers. The Scaffolder pushes pages. The Reviewer pulls diffs. Tools are used, not simulated.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="faq" id="faq" aria-labelledby="faq-heading">
+      <div class="container">
+        <p class="section-label reveal">FAQ</p>
+        <h2 class="section-title reveal" id="faq-heading">Frequently Asked Questions</h2>
+        <div class="faq__list">
+
+          <div class="faq-item reveal">
+            <button class="faq-item__question" id="faq-question-1" aria-expanded="false" aria-controls="faq-answer-1">
+              <span>Is this a real working system or a concept demo?</span>
+              <span class="faq-item__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-item__answer" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" hidden>
+              <p>It is real. The 3D office visualizes actual Claude Code subagent sessions. When a researcher agent is spawned in the terminal, the Researcher avatar walks to their desk, glows, and surfaces real dialogue. The visualization layer is driven by live events, not pre-recorded animations.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__question" id="faq-question-2" aria-expanded="false" aria-controls="faq-answer-2">
+              <span>What is an AI agent team?</span>
+              <span class="faq-item__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-item__answer" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" hidden>
+              <p>A group of specialized AI instances &mdash; each with a defined role, tools, and scope &mdash; coordinated by a lead agent or human operator. Instead of one general-purpose chatbot, you get a researcher, a copywriter, a debugger, and eight other specialists, each doing what they are built for.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__question" id="faq-question-3" aria-expanded="false" aria-controls="faq-answer-3">
+              <span>Does this replace developers?</span>
+              <span class="faq-item__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-item__answer" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" hidden>
+              <p>No. Anders, the lead developer, delegates every task and reviews every deliverable. Agents handle execution &mdash; research, first drafts, audits, scaffolding. The human sets strategy, makes judgment calls, and decides what ships.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__question" id="faq-question-4" aria-expanded="false" aria-controls="faq-answer-4">
+              <span>What tech stack powers this?</span>
+              <span class="faq-item__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-item__answer" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" hidden>
+              <p>Babylon.js for 3D rendering, Claude Code (Opus 4) for agent orchestration, a Node.js SSE server for real-time event streaming, Vite for the frontend build, and MCP servers for WordPress and GitHub integration.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__question" id="faq-question-5" aria-expanded="false" aria-controls="faq-answer-5">
+              <span>Can I use this for my own agency or workflow?</span>
+              <span class="faq-item__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-item__answer" id="faq-answer-5" role="region" aria-labelledby="faq-question-5" hidden>
+              <p>The architecture is modular. The agent definitions, event server, and 3D visualization are separate layers. If you run Claude Code with subagents and session hooks, you can wire up the same event-driven visualization for your own team structure.</p>
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-item__question" id="faq-question-6" aria-expanded="false" aria-controls="faq-answer-6">
+              <span>How does the 3D visualization stay in sync with agent activity?</span>
+              <span class="faq-item__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-item__answer" id="faq-answer-6" role="region" aria-labelledby="faq-question-6" hidden>
+              <p>Claude Code session hooks emit events on task start, agent spawn, speech, and completion. These hit a local SSE server which pushes them to the browser. The Babylon.js scene translates each event into agent movement, glow states, and dialogue bubbles with under 100ms latency.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER CTA ===== -->
+    <section class="footer-cta" aria-labelledby="cta-heading">
+      <div class="container footer-cta__content">
+        <h2 class="reveal" id="cta-heading">See the AI Agent Team in Action</h2>
+        <p class="footer-cta__sub reveal">Eleven agents. Four rooms. One system you can actually observe.</p>
+        <div class="footer-cta__actions reveal">
+          <a href="#workflow" class="btn-primary">Watch It Work</a>
+          <a href="https://github.com/xdrew760x/agentic-agency" target="_blank" rel="noopener noreferrer" class="btn-ghost">View on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <p>Built by <a href="https://bigrigmedia.com" target="_blank" rel="noopener noreferrer">Big Rig Media</a> &middot; <a href="https://github.com/xdrew760x/agentic-agency" target="_blank" rel="noopener noreferrer">Source on GitHub</a></p>
+  </footer>
+
+  <!-- ===== INLINE SCRIPTS ===== -->
+  <script>
+    /* ================================================================
+       Scroll reveal via IntersectionObserver
+       ================================================================ */
+    (function () {
+      var revealEls = document.querySelectorAll('.reveal');
+      if (!revealEls.length) return;
+
+      if (!('IntersectionObserver' in window)) {
+        // Fallback: show everything immediately
+        revealEls.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      revealEls.forEach(function (el) { observer.observe(el); });
+    })();
+
+    /* ================================================================
+       FAQ accordion
+       ================================================================ */
+    (function () {
+      var faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(function (item) {
+        var btn = item.querySelector('.faq-item__question');
+        btn.addEventListener('click', function () {
+          var isActive = item.classList.contains('active');
+          // Close all
+          faqItems.forEach(function (other) {
+            other.classList.remove('active');
+            other.querySelector('.faq-item__question').setAttribute('aria-expanded', 'false');
+            other.querySelector('.faq-item__answer').setAttribute('hidden', '');
+          });
+          // Toggle current
+          if (!isActive) {
+            item.classList.add('active');
+            btn.setAttribute('aria-expanded', 'true');
+            item.querySelector('.faq-item__answer').removeAttribute('hidden');
+          }
+        });
+      });
+    })();
+
+    /* ================================================================
+       Mobile navigation toggle
+       ================================================================ */
+    (function () {
+      var toggle = document.querySelector('.site-nav__toggle');
+      var navLinks = document.querySelector('.site-nav__links');
+      if (!toggle || !navLinks) return;
+      toggle.addEventListener('click', function () {
+        var isOpen = navLinks.classList.contains('is-open');
+        navLinks.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+        toggle.setAttribute('aria-label', isOpen ? 'Open navigation menu' : 'Close navigation menu');
+      });
+      // Close menu when a link is clicked
+      navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-label', 'Open navigation menu');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

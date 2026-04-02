@@ -1,0 +1,506 @@
+/* ============================================================================
+   AGENTIC AGENCY LANDING PAGE — DESIGN TOKENS
+   Generated: 2026-04-02
+   Mode: Dark only (v1)
+   Base unit: 4px
+   ============================================================================ */
+
+:root {
+
+  /* ==========================================================================
+     1. BASE PALETTE — Backgrounds, Surfaces, Borders
+     Layered dark system: deeper = further back, lighter = elevated
+     Source: existing office UI (#0a0a0f base)
+     ========================================================================== */
+
+  /* Backgrounds — layered depth */
+  --color-bg-void:        #050508;   /* behind-everything, page body, hero bg   */
+  --color-bg-base:        #0a0a0f;   /* primary background — matches 3D scene   */
+  --color-bg-raised:      #0e0e16;   /* slightly elevated — section alternation */
+  --color-bg-surface:     #111118;   /* card backgrounds, panels                */
+  --color-bg-surface-alt: #16161f;   /* nested cards, hover states on surfaces  */
+  --color-bg-overlay:     rgba(10, 10, 20, 0.95); /* modals, info cards        */
+
+  /* Borders — from office UI rgba patterns */
+  --color-border-subtle:  rgba(255, 255, 255, 0.05);  /* section dividers       */
+  --color-border-default: rgba(255, 255, 255, 0.08);  /* card borders, panels   */
+  --color-border-strong:  rgba(255, 255, 255, 0.12);  /* active/focus borders   */
+  --color-border-solid:   #1e1e2a;                     /* when rgba is unwanted  */
+
+  /* Text — full hierarchy from office UI */
+  --color-text-primary:   #e5e7eb;   /* headings, primary body text             */
+  --color-text-secondary: #d1d5db;   /* supporting body text                    */
+  --color-text-muted:     #9ca3af;   /* labels, captions, secondary info        */
+  --color-text-faint:     #6b7280;   /* timestamps, hints, disabled             */
+  --color-text-ghost:     #4b5563;   /* barely visible, decorative text         */
+  --color-text-dim:       #374151;   /* controls hint text, watermarks          */
+  --color-text-white:     #ffffff;   /* high-emphasis on dark surfaces          */
+
+
+  /* ==========================================================================
+     2. AGENT ACCENT COLORS
+     Extracted directly from agentData.js — the canonical source
+     Each agent also gets a glow (same color at reduced opacity) and a
+     text-safe variant (lightened for WCAG AA on --color-bg-base)
+     ========================================================================== */
+
+  /* Anders — Lead Developer */
+  --color-agent-anders:          #3B82F6;
+  --color-agent-anders-glow:     rgba(59, 130, 246, 0.35);
+  --color-agent-anders-text:     #60A5FA;  /* lightened for text on dark bg */
+
+  /* Researcher */
+  --color-agent-researcher:      #F59E0B;
+  --color-agent-researcher-glow: rgba(245, 158, 11, 0.35);
+  --color-agent-researcher-text: #FBBF24;  /* lightened for contrast */
+
+  /* Copywriter */
+  --color-agent-copywriter:      #10B981;
+  --color-agent-copywriter-glow: rgba(16, 185, 129, 0.35);
+  --color-agent-copywriter-text: #34D399;  /* lightened for contrast */
+
+  /* SEO Analyst */
+  --color-agent-seo:             #14B8A6;
+  --color-agent-seo-glow:        rgba(20, 184, 166, 0.35);
+  --color-agent-seo-text:        #2DD4BF;  /* lightened for contrast */
+
+  /* Client Onboarder */
+  --color-agent-onboarder:       #EAB308;
+  --color-agent-onboarder-glow:  rgba(234, 179, 8, 0.35);
+  --color-agent-onboarder-text:  #FACC15;  /* lightened for contrast */
+
+  /* Email Writer */
+  --color-agent-emailwriter:          #38BDF8;
+  --color-agent-emailwriter-glow:     rgba(56, 189, 248, 0.35);
+  --color-agent-emailwriter-text:     #7DD3FC;  /* lightened for contrast */
+
+  /* Design Tokenizer */
+  --color-agent-tokenizer:       #A855F7;
+  --color-agent-tokenizer-glow:  rgba(168, 85, 247, 0.35);
+  --color-agent-tokenizer-text:  #C084FC;  /* lightened for contrast */
+
+  /* Image Prompter */
+  --color-agent-imageprompter:       #EC4899;
+  --color-agent-imageprompter-glow:  rgba(236, 72, 153, 0.35);
+  --color-agent-imageprompter-text:  #F472B6;  /* lightened for contrast */
+
+  /* Code Reviewer */
+  --color-agent-reviewer:        #EF4444;
+  --color-agent-reviewer-glow:   rgba(239, 68, 68, 0.35);
+  --color-agent-reviewer-text:   #F87171;  /* lightened for contrast */
+
+  /* Scaffolder */
+  --color-agent-scaffolder:      #F97316;
+  --color-agent-scaffolder-glow: rgba(249, 115, 22, 0.35);
+  --color-agent-scaffolder-text: #FB923C;  /* lightened for contrast */
+
+  /* Debugger */
+  --color-agent-debugger:        #DC2626;
+  --color-agent-debugger-glow:   rgba(220, 38, 38, 0.35);
+  --color-agent-debugger-text:   #F87171;  /* same as reviewer — both red family */
+
+
+  /* ==========================================================================
+     3. INTERACTIVE / CTA COLORS
+     Primary CTA uses a blue-to-purple gradient (brief spec)
+     ========================================================================== */
+
+  --color-cta-primary:       #3B82F6;  /* blue — Anders' color, the lead       */
+  --color-cta-primary-hover: #60A5FA;  /* lighter blue on hover                */
+  --color-cta-secondary:     #A855F7;  /* purple — design/creative accent      */
+  --color-cta-accent:        #10B981;  /* green — positive actions, success    */
+
+  /* Gradient endpoints for CTA buttons */
+  --gradient-cta-from:       #3B82F6;
+  --gradient-cta-to:         #8B5CF6;
+  --gradient-cta-hover-from: #60A5FA;
+  --gradient-cta-hover-to:   #A78BFA;
+
+
+  /* ==========================================================================
+     4. TYPOGRAPHY
+     System font stack for performance. Monospace for technical accents.
+     Fluid scale: clamp() for responsive sizing without breakpoints.
+     ========================================================================== */
+
+  /* Font families */
+  --font-sans:  'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono:  'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', monospace;
+
+  /* Font sizes — fluid scale (min at 375px, max at 1440px) */
+  --text-xs:    clamp(0.6875rem, 0.65rem + 0.1vw, 0.75rem);       /* 11–12px */
+  --text-sm:    clamp(0.75rem, 0.7rem + 0.15vw, 0.875rem);        /* 12–14px */
+  --text-base:  clamp(0.875rem, 0.83rem + 0.2vw, 1rem);           /* 14–16px */
+  --text-lg:    clamp(1rem, 0.93rem + 0.3vw, 1.25rem);            /* 16–20px */
+  --text-xl:    clamp(1.25rem, 1.1rem + 0.5vw, 1.75rem);          /* 20–28px */
+  --text-2xl:   clamp(1.5rem, 1.2rem + 1vw, 2.5rem);             /* 24–40px */
+  --text-3xl:   clamp(2rem, 1.5rem + 1.5vw, 3.25rem);            /* 32–52px */
+  --text-4xl:   clamp(2.5rem, 1.8rem + 2.2vw, 4.5rem);           /* 40–72px */
+  --text-hero:  clamp(3rem, 2rem + 3vw, 5.5rem);                  /* 48–88px */
+
+  /* Font weights */
+  --font-normal:    400;
+  --font-medium:    500;
+  --font-semibold:  600;
+  --font-bold:      700;
+  --font-extrabold: 800;
+
+  /* Line heights */
+  --leading-tight:  1.1;    /* hero headlines                */
+  --leading-snug:   1.25;   /* section headings              */
+  --leading-normal: 1.5;    /* body text — dark bg readability */
+  --leading-relaxed: 1.7;   /* long-form, wide measure       */
+
+  /* Letter spacing */
+  --tracking-tight:    -0.02em;  /* large headlines              */
+  --tracking-normal:    0;       /* body text                    */
+  --tracking-wide:      0.05em;  /* small caps, labels           */
+  --tracking-widest:    0.15em;  /* all-caps section labels      */
+  --tracking-ultra:     0.2em;   /* HUD-style branding text      */
+
+
+  /* ==========================================================================
+     5. SPACING — 4px base, consistent scale
+     ========================================================================== */
+
+  --space-0:    0;
+  --space-px:   1px;
+  --space-0-5:  2px;      /* 0.5 units  */
+  --space-1:    4px;      /* 1 unit     */
+  --space-1-5:  6px;
+  --space-2:    8px;      /* 2 units    */
+  --space-3:    12px;
+  --space-4:    16px;     /* 4 units — base rhythm */
+  --space-5:    20px;
+  --space-6:    24px;
+  --space-8:    32px;
+  --space-10:   40px;
+  --space-12:   48px;
+  --space-16:   64px;
+  --space-20:   80px;
+  --space-24:   96px;
+  --space-32:   128px;
+
+  /* Section spacing — generous vertical rhythm for landing page */
+  --section-gap:       clamp(64px, 8vw, 128px);
+  --section-gap-lg:    clamp(96px, 12vw, 192px);
+
+  /* Content widths */
+  --width-content:     768px;     /* prose/text content max     */
+  --width-wide:        1100px;    /* card grids, features       */
+  --width-full:        1400px;    /* hero, full-bleed sections  */
+
+
+  /* ==========================================================================
+     6. BORDER RADIUS
+     ========================================================================== */
+
+  --radius-sm:    4px;     /* small elements: badges, tags         */
+  --radius-md:    8px;     /* buttons, inputs, small cards         */
+  --radius-lg:    12px;    /* cards, panels — matches office UI    */
+  --radius-xl:    16px;    /* large cards, hero overlays           */
+  --radius-2xl:   24px;    /* pill buttons, large CTAs             */
+  --radius-full:  9999px;  /* circles, fully rounded               */
+
+
+  /* ==========================================================================
+     7. SHADOWS & GLOWS
+     Dark UI: shadows go darker, glows use agent colors
+     ========================================================================== */
+
+  /* Elevation shadows — subtle on dark bg */
+  --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md:    0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg:    0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-xl:    0 16px 48px rgba(0, 0, 0, 0.7);
+
+  /* Agent glow — used on cards, avatars, active states */
+  --glow-sm:      0 0 8px;     /* pair with agent color at 0.3 alpha  */
+  --glow-md:      0 0 16px;    /* card hover glow                     */
+  --glow-lg:      0 0 32px;    /* hero elements, featured agents      */
+  --glow-xl:      0 0 48px;    /* CTA button glow pulse               */
+
+  /* Specific glows (ready to use) */
+  --glow-cta:         0 0 24px rgba(59, 130, 246, 0.3), 0 0 48px rgba(139, 92, 246, 0.15);
+  --glow-cta-hover:   0 0 32px rgba(59, 130, 246, 0.45), 0 0 64px rgba(139, 92, 246, 0.25);
+
+  /* Card glow on hover — apply with agent color */
+  --glow-card:        0 0 1px rgba(255, 255, 255, 0.05), 0 4px 16px rgba(0, 0, 0, 0.5);
+  --glow-card-hover:  0 0 1px rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  /* Backdrop blur for overlays */
+  --blur-sm:    blur(4px);
+  --blur-md:    blur(10px);
+  --blur-lg:    blur(20px);
+
+
+  /* ==========================================================================
+     8. GRADIENTS
+     ========================================================================== */
+
+  /* Hero background — deep void with subtle blue shift */
+  --gradient-hero:          linear-gradient(
+                              180deg,
+                              #050508 0%,
+                              #0a0a0f 30%,
+                              #0d0d1a 70%,
+                              #0a0a0f 100%
+                            );
+
+  /* Section transition — subtle depth change between sections */
+  --gradient-section-fade:  linear-gradient(
+                              180deg,
+                              transparent 0%,
+                              rgba(10, 10, 15, 0.5) 50%,
+                              transparent 100%
+                            );
+
+  /* CTA button gradient */
+  --gradient-cta:           linear-gradient(
+                              135deg,
+                              var(--gradient-cta-from) 0%,
+                              var(--gradient-cta-to) 100%
+                            );
+  --gradient-cta-hover:     linear-gradient(
+                              135deg,
+                              var(--gradient-cta-hover-from) 0%,
+                              var(--gradient-cta-hover-to) 100%
+                            );
+
+  /* Text gradient — for hero headline accent */
+  --gradient-text-brand:    linear-gradient(
+                              135deg,
+                              #3B82F6 0%,
+                              #A855F7 50%,
+                              #EC4899 100%
+                            );
+
+  /* Agent card top-border glow gradient (set per card) */
+  --gradient-agent-glow:    linear-gradient(
+                              90deg,
+                              transparent 0%,
+                              var(--agent-color, #3B82F6) 50%,
+                              transparent 100%
+                            );
+
+  /* Radial glow for hero background — centered spotlight */
+  --gradient-hero-radial:   radial-gradient(
+                              ellipse 60% 40% at 50% 40%,
+                              rgba(59, 130, 246, 0.06) 0%,
+                              rgba(139, 92, 246, 0.03) 40%,
+                              transparent 70%
+                            );
+
+
+  /* ==========================================================================
+     9. ANIMATION TOKENS
+     Durations, easing curves for scroll reveals and interactions
+     ========================================================================== */
+
+  /* Durations */
+  --duration-instant:   75ms;
+  --duration-fast:      150ms;
+  --duration-normal:    250ms;
+  --duration-slow:      400ms;
+  --duration-slower:    600ms;
+  --duration-entrance:  800ms;    /* scroll reveal entrance     */
+  --duration-hero:      1200ms;   /* hero element stagger       */
+
+  /* Easing curves */
+  --ease-default:       cubic-bezier(0.4, 0, 0.2, 1);    /* general purpose        */
+  --ease-in:            cubic-bezier(0.4, 0, 1, 1);       /* accelerate out         */
+  --ease-out:           cubic-bezier(0, 0, 0.2, 1);       /* decelerate in          */
+  --ease-in-out:        cubic-bezier(0.4, 0, 0.2, 1);     /* symmetric              */
+  --ease-spring:        cubic-bezier(0.34, 1.56, 0.64, 1); /* bouncy entrance       */
+  --ease-smooth:        cubic-bezier(0.25, 0.1, 0.25, 1);  /* smooth scroll reveal  */
+
+  /* Stagger delay base — multiply for nth-child offsets */
+  --stagger-base:       80ms;
+
+  /* Reduced motion — these get overridden in prefers-reduced-motion */
+  --motion-scale:       1;
+}
+
+
+/* ============================================================================
+   REDUCED MOTION — respect user preferences
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant:   0ms;
+    --duration-fast:      0ms;
+    --duration-normal:    0ms;
+    --duration-slow:      0ms;
+    --duration-slower:    0ms;
+    --duration-entrance:  0ms;
+    --duration-hero:      0ms;
+    --stagger-base:       0ms;
+    --motion-scale:       0;
+  }
+}
+
+
+/* ============================================================================
+   BUTTON VARIANTS
+   ============================================================================ */
+
+/*
+   Primary CTA — "Watch It Work"
+   Blue-to-purple gradient with glow. Used in hero, mid-page, final section.
+   Max 1 per viewport.
+*/
+.btn-primary {
+  background: var(--gradient-cta);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-8);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wide);
+  cursor: pointer;
+  box-shadow: var(--glow-cta);
+  transition:
+    box-shadow var(--duration-normal) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+}
+.btn-primary:hover {
+  background: var(--gradient-cta-hover);
+  box-shadow: var(--glow-cta-hover);
+  transform: translateY(-1px);
+}
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-cta-primary-hover);
+  outline-offset: 2px;
+}
+
+/*
+   Secondary / Ghost — "View on GitHub"
+   Transparent with subtle border. Does not compete with primary CTA.
+*/
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-wide);
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default);
+}
+.btn-ghost:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+.btn-ghost:focus-visible {
+  outline: 2px solid var(--color-text-muted);
+  outline-offset: 2px;
+}
+
+/*
+   Agent-colored — used in agent roster cards
+   Set --agent-color on the element to the agent's accent color.
+   Example: style="--agent-color: var(--color-agent-researcher)"
+*/
+.btn-agent {
+  background: transparent;
+  color: var(--agent-color, var(--color-cta-primary));
+  border: 1px solid var(--agent-color, var(--color-cta-primary));
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-default),
+    box-shadow var(--duration-normal) var(--ease-default);
+}
+.btn-agent:hover {
+  background: color-mix(in srgb, var(--agent-color, var(--color-cta-primary)) 12%, transparent);
+  box-shadow: var(--glow-sm) color-mix(in srgb, var(--agent-color, var(--color-cta-primary)) 30%, transparent);
+}
+
+
+/* ============================================================================
+   UTILITY: Agent color as CSS custom property per card
+   Usage: <div class="agent-card" data-agent="researcher">
+   JS sets --agent-color on each card from the token map.
+   ============================================================================ */
+
+/*
+   Agent color map — for JS to read, or for manual application:
+
+   [data-agent="anders"]        { --agent-color: var(--color-agent-anders); }
+   [data-agent="researcher"]    { --agent-color: var(--color-agent-researcher); }
+   [data-agent="copywriter"]    { --agent-color: var(--color-agent-copywriter); }
+   [data-agent="seo"]           { --agent-color: var(--color-agent-seo); }
+   [data-agent="onboarder"]     { --agent-color: var(--color-agent-onboarder); }
+   [data-agent="emailwriter"]   { --agent-color: var(--color-agent-emailwriter); }
+   [data-agent="tokenizer"]     { --agent-color: var(--color-agent-tokenizer); }
+   [data-agent="imageprompter"] { --agent-color: var(--color-agent-imageprompter); }
+   [data-agent="reviewer"]      { --agent-color: var(--color-agent-reviewer); }
+   [data-agent="scaffolder"]    { --agent-color: var(--color-agent-scaffolder); }
+   [data-agent="debugger"]      { --agent-color: var(--color-agent-debugger); }
+*/
+
+
+/* ============================================================================
+   ACCESSIBILITY — CONTRAST RATIO NOTES
+   All ratios calculated against --color-bg-base (#0a0a0f)
+   WCAG AA: 4.5:1 normal text, 3:1 large text (18px+ or 14px+ bold)
+
+   TEXT COLORS ON #0a0a0f:
+   -----------------------------------------------------------------------
+   --color-text-primary   (#e5e7eb)   ~14.5:1   PASS AA, AAA
+   --color-text-secondary (#d1d5db)   ~12.5:1   PASS AA, AAA
+   --color-text-muted     (#9ca3af)   ~ 6.5:1   PASS AA
+   --color-text-faint     (#6b7280)   ~ 3.8:1   PASS large text only
+   --color-text-ghost     (#4b5563)   ~ 2.4:1   FAIL — decorative only
+   --color-text-dim       (#374151)   ~ 1.6:1   FAIL — decorative only
+
+   AGENT COLORS AS TEXT ON #0a0a0f (using -text variants):
+   -----------------------------------------------------------------------
+   Anders       (#60A5FA)   ~ 6.3:1   PASS AA
+   Researcher   (#FBBF24)   ~10.8:1   PASS AA, AAA
+   Copywriter   (#34D399)   ~ 8.8:1   PASS AA, AAA
+   SEO          (#2DD4BF)   ~ 8.6:1   PASS AA
+   Onboarder    (#FACC15)   ~11.5:1   PASS AA, AAA
+   Email Writer (#7DD3FC)   ~ 9.5:1   PASS AA, AAA
+   Tokenizer    (#C084FC)   ~ 5.5:1   PASS AA
+   Img Prompter (#F472B6)   ~ 6.2:1   PASS AA
+   Reviewer     (#F87171)   ~ 5.6:1   PASS AA
+   Scaffolder   (#FB923C)   ~ 7.0:1   PASS AA
+   Debugger     (#F87171)   ~ 5.6:1   PASS AA
+
+   RAW AGENT COLORS AS TEXT ON #0a0a0f (original hex, NOT -text variants):
+   -----------------------------------------------------------------------
+   Anders       (#3B82F6)   ~ 4.6:1   PASS AA (borderline)
+   Researcher   (#F59E0B)   ~ 7.7:1   PASS AA
+   Copywriter   (#10B981)   ~ 5.6:1   PASS AA
+   SEO          (#14B8A6)   ~ 5.8:1   PASS AA
+   Onboarder    (#EAB308)   ~ 8.0:1   PASS AA
+   Email Writer (#38BDF8)   ~ 7.4:1   PASS AA
+   Tokenizer    (#A855F7)   ~ 3.5:1   FAIL normal — use -text variant
+   Img Prompter (#EC4899)   ~ 4.2:1   FAIL normal — use -text variant
+   Reviewer     (#EF4444)   ~ 3.8:1   FAIL normal — use -text variant
+   Scaffolder   (#F97316)   ~ 5.3:1   PASS AA
+   Debugger     (#DC2626)   ~ 3.0:1   FAIL normal — use -text variant
+
+   RULES:
+   - For body text: always use the -text variant of agent colors
+   - For large headings (24px+): raw agent colors are acceptable
+   - For decorative elements (dots, glows, borders): raw colors are fine
+   - --color-text-faint and below: never use for essential information
+   - CTA button text (#ffffff on gradient): ~8:1+ PASS
+
+   ========================================================================== */

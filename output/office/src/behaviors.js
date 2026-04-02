@@ -25,7 +25,7 @@ export function walkTo(avatar, targetX, targetZ, onArrived) {
       return;
     }
 
-    const step = Math.min(0.047, dist);
+    const step = Math.min(0.14, dist);
     dir.normalize().scaleInPlace(step);
     avatar.root.position.addInPlace(dir);
 
