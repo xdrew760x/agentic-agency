@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agentic Agency — Office</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0f;
+      overflow: hidden;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    #renderCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      /* leave 300px on the right for the feed panel */
+      width: calc(100vw - 300px);
+      height: 100vh;
+      display: block;
+      touch-action: none;
+    }
+
+    /* ── HUD: top-left branding ── */
+    #hud {
+      position: fixed;
+      top: 18px;
+      left: 22px;
+      color: #fff;
+      pointer-events: none;
+      z-index: 10;
+    }
+    #hud .title {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #6b7280;
+    }
+    #hud .subtitle {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-top: 2px;
+    }
+
+    /* ── Status panel: top-left below HUD ── */
+    #status-panel {
+      position: fixed;
+      top: 70px;
+      left: 22px;
+      width: 190px;
+      background: rgba(10,10,20,0.85);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #e5e7eb;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+    #status-panel h3 {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+    .agent-status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .agent-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: opacity 0.3s, box-shadow 0.3s;
+    }
+    .agent-dot.idle    { opacity: 0.3; }
+    .agent-dot.working { opacity: 1; box-shadow: 0 0 5px currentColor; }
+    .agent-dot.walking { opacity: 0.7; }
+    .agent-name-label  { font-size: 11px; color: #d1d5db; flex: 1; }
+    .agent-state-label { font-size: 10px; color: #4b5563; }
+
+    /* ── RIGHT SIDE: Team Feed panel ── */
+    #feed-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 100vh;
+      background: rgba(8, 8, 14, 0.96);
+      border-left: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    #feed-header {
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      flex-shrink: 0;
+    }
+    #feed-header .feed-title {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+
+    /* filter tabs */
+    #feed-tabs {
+      display: flex;
+      gap: 4px;
+    }
+    .feed-tab {
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: transparent;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.05em;
+    }
+    .feed-tab:hover    { color: #d1d5db; border-color: rgba(255,255,255,0.2); }
+    .feed-tab.active   { background: rgba(255,255,255,0.08); color: #e5e7eb; border-color: rgba(255,255,255,0.18); }
+
+    /* scrollable message list */
+    #feed-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 0;
+      scroll-behavior: smooth;
+    }
+    #feed-messages::-webkit-scrollbar { width: 4px; }
+    #feed-messages::-webkit-scrollbar-track { background: transparent; }
+    #feed-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+    /* individual message entry */
+    .feed-entry {
+      padding: 8px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      animation: feedSlideIn 0.25s ease;
+    }
+    .feed-entry:hover { background: rgba(255,255,255,0.02); }
+
+    @keyframes feedSlideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .feed-entry-header {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 4px;
+    }
+    .feed-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .feed-agent-name {
+      font-size: 11px;
+      font-weight: 600;
+      flex: 1;
+    }
+    .feed-type-badge {
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+    .feed-type-badge.think {
+      background: rgba(139,92,246,0.15);
+      color: #a78bfa;
+      border: 1px solid rgba(139,92,246,0.25);
+    }
+    .feed-type-badge.say {
+      background: rgba(59,130,246,0.15);
+      color: #93c5fd;
+      border: 1px solid rgba(59,130,246,0.25);
+    }
+    .feed-type-badge.action {
+      background: rgba(16,185,129,0.12);
+      color: #6ee7b7;
+      border: 1px solid rgba(16,185,129,0.2);
+    }
+
+    .feed-message {
+      font-size: 12px;
+      line-height: 1.5;
+      padding-left: 15px;
+    }
+    .feed-message.think {
+      color: #9ca3af;
+      font-style: italic;
+    }
+    .feed-message.say {
+      color: #e5e7eb;
+    }
+    .feed-message.action {
+      color: #6ee7b7;
+    }
+
+    .feed-time {
+      font-size: 9px;
+      color: #374151;
+      padding-left: 15px;
+      margin-top: 2px;
+    }
+
+    /* feed footer: clear button */
+    #feed-footer {
+      padding: 10px 14px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #feed-count {
+      font-size: 10px;
+      color: #374151;
+    }
+    #feed-clear {
+      font-size: 10px;
+      color: #374151;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    #feed-clear:hover { color: #9ca3af; }
+
+    /* ── Agent info card (on click) ── */
+    #info-card {
+      position: fixed;
+      bottom: 30px;
+      left: calc(50% - 150px); /* account for feed panel */
+      transform: translateX(-50%);
+      background: rgba(10,10,20,0.95);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 18px 24px;
+      color: #e5e7eb;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      display: none;
+      min-width: 300px;
+      text-align: center;
+    }
+    #info-card .card-avatar-color {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+    }
+    #info-card h2  { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    #info-card .role { font-size: 12px; color: #9ca3af; margin-bottom: 10px; }
+    #info-card .task { font-size: 12px; color: #60a5fa; }
+    #info-card .close-btn {
+      margin-top: 14px;
+      font-size: 10px;
+      color: #4b5563;
+      cursor: pointer;
+      pointer-events: all;
+    }
+    #info-card .close-btn:hover { color: #9ca3af; }
+
+    /* ── Controls hint ── */
+    #controls-hint {
+      position: fixed;
+      bottom: 18px;
+      left: 22px;
+      font-size: 10px;
+      color: #374151;
+      letter-spacing: 0.05em;
+      pointer-events: none;
+      z-index: 10;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="renderCanvas"></canvas>
+
+  <div id="hud">
+    <div class="title">Agentic Agency</div>
+    <div class="subtitle">AI Development Workspace</div>
+  </div>
+
+  <div id="status-panel">
+    <h3>Team Status</h3>
+    <div id="agent-list"></div>
+  </div>
+
+  <!-- ── Team Feed panel ── -->
+  <div id="feed-panel">
+    <div id="feed-header">
+      <div class="feed-title">Team Feed</div>
+      <div id="feed-tabs">
+        <button class="feed-tab active" data-filter="all"     onclick="setFeedFilter('all')">All</button>
+        <button class="feed-tab"        data-filter="think"   onclick="setFeedFilter('think')">Thinking</button>
+        <button class="feed-tab"        data-filter="say"     onclick="setFeedFilter('say')">Speaking</button>
+        <button class="feed-tab"        data-filter="action"  onclick="setFeedFilter('action')">Actions</button>
+      </div>
+    </div>
+    <div id="feed-messages"></div>
+    <div id="feed-footer">
+      <span id="feed-count">0 messages</span>
+      <button id="feed-clear" onclick="clearFeed()">Clear</button>
+    </div>
+  </div>
+
+  <div id="info-card">
+    <div class="card-avatar-color" id="card-color"></div>
+    <h2 id="card-name"></h2>
+    <div class="role" id="card-role"></div>
+    <div class="task" id="card-task"></div>
+    <div class="close-btn" onclick="closeCard()">click anywhere to close</div>
+  </div>
+
+  <div id="controls-hint">
+    Left drag — orbit &nbsp;|&nbsp; Right drag — pan &nbsp;|&nbsp; Scroll — zoom<br>
+    Click agent — inspect &nbsp;|&nbsp; Double-click room — focus
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
