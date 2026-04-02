@@ -2,21 +2,18 @@
   "permissions": {
     "allow": [
       "Bash(npm install:*)",
-      "Read(//c/Users/xDrew760x/AppData/Roaming/npm/**)",
-      "Read(//c/Users/xDrew760x/.nvm/versions/**)",
       "Skill(update-config)",
       "Bash(npm run:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git config:*)",
       "Bash(git push:*)",
-      "WebSearch",
-      "Bash(Get-NetTCPConnection -LocalPort 5174 -ErrorAction SilentlyContinue)",
-      "Bash(Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue)",
+      "Bash(git checkout:*)",
       "Bash(curl:*)",
       "Bash(node event-server.js)",
-      "Bash(netstat -ano)",
-      "Bash(taskkill:*)",
+      "Bash(lsof -ti:5173)",
+      "Bash(lsof -ti:4001)",
+      "WebSearch",
       "WebFetch(domain:www.anthropic.com)"
     ]
   }
