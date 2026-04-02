@@ -17,3 +17,5 @@ Log important architectural or workflow decisions here so future sessions have c
 | 2026-04-02 | Vite binds 0.0.0.0 for LAN access | Office and landing page accessible to anyone on WiFi |
 | 2026-04-02 | Built landing page with all 10 agents | First full-team showcase: research → brief → tokens → copy → SEO → images → scaffold → review → debug → emails |
 | 2026-04-02 | Token efficiency: Haiku for light agents, parallel independent agents | Email Writer, Image Prompter, Onboarder, Tokenizer use Haiku; parallelize when no dependency |
+| 2026-04-02 | Session start opens landing page (port 8080) not office directly | Landing page at public/index.html served via npx serve; office runs on :5173 as iframe inside it |
+| 2026-04-02 | Welcome message shows LAN URL | Detects en0 IP so anyone on WiFi can access the landing page |

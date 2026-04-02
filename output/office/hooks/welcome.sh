@@ -1,6 +1,9 @@
 #!/bin/bash
+LAN_IP=$(ipconfig getifaddr en0 2>/dev/null || echo "unavailable")
+export LAN_IP
 python3 -c "
-import json
+import json, os
+lan_ip = os.environ.get('LAN_IP', 'unavailable')
 msg = '''
           AGENTIC AGENCY  |  AI DEVELOPMENT WORKSPACE
 
@@ -8,32 +11,35 @@ msg = '''
   Lead Developer Anders is online.
   Theme: xpress-2  |  Stack: WordPress + Gutenberg + Tailwind v4
 
+  Landing page:  http://localhost:8080
+  LAN access:    http://''' + lan_ip + ''':8080
+
   WHAT DO YOU WANT TO DO?
 
   [ 1 ]  Onboard a new client
-         \u2192 \"Start a project for [Client Name]\"
+         -> \"Start a project for [Client Name]\"
 
   [ 2 ]  Connect to a WordPress site
-         \u2192 \"Connect to [client] site\"
+         -> \"Connect to [client] site\"
 
   [ 3 ]  Build or edit a site
-         \u2192 \"Build the site\" / \"Edit the [page] page\"
+         -> \"Build the site\" / \"Edit the [page] page\"
 
   [ 4 ]  Write copy
-         \u2192 \"Write copy for the [page] page\"
+         -> \"Write copy for the [page] page\"
 
   [ 5 ]  Research a topic
-         \u2192 \"Research [topic]\"
+         -> \"Research [topic]\"
 
   [ 6 ]  Debug something broken
-         \u2192 \"Something is broken\" / \"Getting an error on [X]\"
+         -> \"Something is broken\" / \"Getting an error on [X]\"
 
   [ 7 ]  Review code before it ships
-         \u2192 \"Review this code\"
+         -> \"Review this code\"
 
-\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+----------------------------------------------------------------
   Need help?  Just describe what you are working on.
-\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+----------------------------------------------------------------
 '''
 print(json.dumps({'systemMessage': msg}))
 "

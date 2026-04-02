@@ -32,7 +32,8 @@
       "Bash(xargs kill:*)",
       "Bash(lsof -ti:8080)",
       "Bash(ls:*)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(bash:*)"
     ]
   }
 }
