@@ -54,16 +54,16 @@ function setAvatarBodyColor(avatar, state) {
   const baseColor = hexToColor3(avatar.agentDef.color);
 
   if (state === 'working') {
-    avatar.body.material.emissiveColor = new Color3(
-      baseColor.r * 0.6, baseColor.g * 0.6, baseColor.b * 0.6
-    );
+    // Full emissive = agent color — very visible glow even from far camera
+    avatar.body.material.emissiveColor = new Color3(baseColor.r, baseColor.g, baseColor.b);
+    avatar.head.material.emissiveColor = new Color3(baseColor.r * 0.6, baseColor.g * 0.6, baseColor.b * 0.6);
   } else if (state === 'walking') {
-    avatar.body.material.emissiveColor = new Color3(
-      baseColor.r * 0.3, baseColor.g * 0.3, baseColor.b * 0.3
-    );
+    avatar.body.material.emissiveColor = new Color3(baseColor.r * 0.4, baseColor.g * 0.4, baseColor.b * 0.4);
+    avatar.head.material.emissiveColor = new Color3(0, 0, 0);
   } else {
     // idle
     avatar.body.material.emissiveColor = new Color3(0, 0, 0);
+    avatar.head.material.emissiveColor = new Color3(0, 0, 0);
   }
 }
 

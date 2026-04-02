@@ -14,7 +14,10 @@
       "Bash(Get-NetTCPConnection -LocalPort 5174 -ErrorAction SilentlyContinue)",
       "Bash(Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue)",
       "Bash(curl:*)",
-      "Bash(node event-server.js)"
+      "Bash(node event-server.js)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill:*)",
+      "WebFetch(domain:www.anthropic.com)"
     ]
   }
 }

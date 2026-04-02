@@ -53,17 +53,26 @@ const DONE_LINES = {
   anders:        'Done.',
 };
 
+// Track active task bubbles so we can clear them on agent-done
+const activeBubbleTimers = {};
+
 // ── Connect ────────────────────────────────────────────────────────────────
 export function connectEventStream(avatarMap) {
   const src = new EventSource('/api/events');
 
   src.onmessage = (e) => {
     try {
-      handleEvent(JSON.parse(e.data), avatarMap);
-    } catch (_) {}
+      const event = JSON.parse(e.data);
+      console.log('[office] event received:', event);
+      handleEvent(event, avatarMap);
+    } catch (err) {
+      console.warn('[office] event parse error:', err);
+    }
   };
 
-  // EventSource reconnects automatically on error — no extra handling needed
+  src.onerror = () => console.warn('[office] SSE disconnected — will reconnect');
+  src.onopen  = () => console.log('[office] SSE connected to event server');
+
   return src;
 }
 
@@ -76,30 +85,47 @@ function handleEvent(event, avatarMap) {
   switch (event.type) {
 
     case 'agent-start': {
-      if (!avatar) break;
+      if (!avatar) { console.warn('[office] agent-start: no avatar for', event.agentId); break; }
       setAvatarState(avatar, 'working');
-      const line = START_LINES[event.agentId] ?? 'Working on it.';
-      speak(avatar, line);
-      feedSay(avatar.agentDef, line);
+      const startLine = START_LINES[event.agentId] ?? 'Working on it.';
+
+      // Keep bubble visible for full task — clear any previous timer
+      if (activeBubbleTimers[event.agentId]) clearTimeout(activeBubbleTimers[event.agentId]);
+      avatar.bubbleText.text = startLine;
+      avatar.bubble.isVisible = true;
+      // Auto-hide after 10 min as a safety net
+      activeBubbleTimers[event.agentId] = setTimeout(() => {
+        avatar.bubble.isVisible = false;
+      }, 600000);
+
+      feedSay(avatar.agentDef, startLine);
       if (event.description) feedAction(avatar.agentDef, event.description);
 
       // Anders acknowledges the delegation
       const anders = avatarMap['anders'];
       if (anders && event.agentId !== 'anders') {
         const role = avatar.agentDef.role;
-        const desc = event.description ? `${event.description}` : 'task delegated';
-        speak(anders, `${role} — ${desc}.`);
+        const desc = event.description ?? 'task delegated';
+        speak(anders, `${role} — ${desc}.`, 8000);
         feedSay(anders.agentDef, `Delegated to ${role}: ${desc}`);
       }
       break;
     }
 
     case 'agent-done': {
-      if (!avatar) break;
+      if (!avatar) { console.warn('[office] agent-done: no avatar for', event.agentId); break; }
+
+      // Clear the persistent task bubble
+      if (activeBubbleTimers[event.agentId]) {
+        clearTimeout(activeBubbleTimers[event.agentId]);
+        delete activeBubbleTimers[event.agentId];
+      }
+      avatar.bubble.isVisible = false;
+
       setAvatarState(avatar, 'idle');
-      const line = DONE_LINES[event.agentId] ?? 'Done.';
-      speak(avatar, line);
-      feedSay(avatar.agentDef, line);
+      const doneLine = DONE_LINES[event.agentId] ?? 'Done.';
+      speak(avatar, doneLine, 6000);
+      feedSay(avatar.agentDef, doneLine);
       // Walk back home
       const home = HOME[event.agentId];
       if (home) walkTo(avatar, home.x, home.z, () => {});
