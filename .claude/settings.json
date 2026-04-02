@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "DIR='/Users/bigrigmedia/Documents/projects/agentic-agency/output/office'; lsof -ti:5173 > /dev/null || (cd \"$DIR\" && nohup npm run dev > /tmp/office-dev.log 2>&1 &); lsof -ti:4001 > /dev/null || (cd \"$DIR\" && nohup node event-server.js > /tmp/office-events.log 2>&1 &); sleep 3; open 'http://localhost:5173' 2>/dev/null || true",
+            "command": "DIR='/Users/bigrigmedia/Documents/projects/agentic-agency/output/office'; lsof -ti:5173 > /dev/null || (cd \"$DIR\" && nohup npm run dev > /tmp/office-dev.log 2>&1 &); lsof -ti:4001 > /dev/null || (cd \"$DIR\" && nohup node event-server.js > /tmp/office-events.log 2>&1 &); sleep 3; open '/Users/bigrigmedia/Documents/projects/agentic-agency/public/index.html' 2>/dev/null || true",
             "shell": "bash",
             "statusMessage": "Starting office servers...",
             "async": true
@@ -56,7 +56,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "lsof -ti:5173 | xargs kill -9 2>/dev/null; lsof -ti:4001 | xargs kill -9 2>/dev/null; true",
+            "command": "lsof -ti:5173 | xargs kill -9 2>/dev/null; lsof -ti:4001 | xargs kill -9 2>/dev/null; lsof -ti:8080 | xargs kill -9 2>/dev/null; true",
             "shell": "bash"
           }
         ]
