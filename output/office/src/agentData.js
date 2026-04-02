@@ -134,6 +134,23 @@ export const AGENTS = [
   },
 ];
 
+// ── Reporting waypoints — where each agent walks to deliver their done report ─
+// Each value is the hallway midpoint between the agent's room and the computer room.
+// Agents walk here, speak their done line, Anders acks, then they return home.
+export const REPORT_WAYPOINTS = {
+  researcher:    { x: -10.5, z:  0.5 },
+  copywriter:    { x: -10.5, z:  0.5 },
+  seo:           { x: -10.5, z:  0.5 },
+  onboarder:     { x: -10.5, z:  0.5 },
+  emailwriter:   { x: -10.5, z:  0.5 },
+  tokenizer:     { x:  17,   z:  0   },
+  imageprompter: { x:  17,   z:  0   },
+  reviewer:      { x:   6,   z: 16   },
+  scaffolder:    { x:   6,   z: 16   },
+  debugger:      { x:   6,   z: 16   },
+  anders:        null,
+};
+
 // ── Room focus targets for camera ──────────────────────────────────────────
 export const ROOMS = {
   meeting: {

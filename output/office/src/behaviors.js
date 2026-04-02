@@ -37,7 +37,10 @@ export function walkTo(avatar, targetX, targetZ, onArrived) {
   });
 
   return () => {
-    if (!done) avatar.root.getScene().onBeforeRenderObservable.remove(observer);
+    if (!done) {
+      avatar.state = 'idle'; // reset so next setAvatarState isn't fighting stale 'walking'
+      avatar.root.getScene().onBeforeRenderObservable.remove(observer);
+    }
   };
 }
 
