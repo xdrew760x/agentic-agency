@@ -17,7 +17,7 @@ function buildMeetingTable(scene) {
   const TABLE_X = 4, TABLE_Z = 3;
 
   const top = MeshBuilder.CreateCylinder('meeting_table', {
-    diameter: 5.5, height: 0.12, tessellation: 32,
+    diameter: 7.0, height: 0.12, tessellation: 32,
   }, scene);
   top.position.set(TABLE_X, 0.84, TABLE_Z);
   top.material = tableMat;
@@ -25,17 +25,17 @@ function buildMeetingTable(scene) {
 
   // Single pedestal leg
   const leg = MeshBuilder.CreateCylinder('meeting_table_leg', {
-    diameter: 0.3, height: 0.84, tessellation: 8,
+    diameter: 0.35, height: 0.84, tessellation: 8,
   }, scene);
   leg.position.set(TABLE_X, 0.42, TABLE_Z);
   leg.material = legMat;
 
-  // Chairs around table
+  // 12 chairs — seats all 11 agents + 1 spare
   const chairMat  = mat(scene, 'chair_seat', new Color3(0.1, 0.12, 0.2));
   const chairBack = mat(scene, 'chair_back', new Color3(0.12, 0.14, 0.22));
 
-  const chairCount  = 8;
-  const chairRadius = 3.5;
+  const chairCount  = 12;
+  const chairRadius = 4.2;
   for (let i = 0; i < chairCount; i++) {
     const angle = (i / chairCount) * Math.PI * 2;
     const cx = TABLE_X + Math.cos(angle) * chairRadius;
@@ -45,9 +45,11 @@ function buildMeetingTable(scene) {
     seat.position.set(cx, 0.5, cz);
     seat.material = chairMat;
 
+    // Backrest sits on the outer side of the seat (away from table center).
+    // rotation.y = angle - PI/2 orients the panel tangentially so its face points inward.
     const back = MeshBuilder.CreateBox(`chair_back_${i}`, { width: 0.7, height: 0.6, depth: 0.07 }, scene);
-    back.position.set(cx - Math.cos(angle) * 0.32, 0.85, cz - Math.sin(angle) * 0.32);
-    back.rotation.y = -angle;
+    back.position.set(cx + Math.cos(angle) * 0.32, 0.85, cz + Math.sin(angle) * 0.32);
+    back.rotation.y = Math.PI / 2 + angle;
     back.material = chairBack;
 
     const cleg = MeshBuilder.CreateCylinder(`chair_leg_${i}`, { diameter: 0.08, height: 0.5, tessellation: 6 }, scene);

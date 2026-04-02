@@ -25,7 +25,7 @@ export function walkTo(avatar, targetX, targetZ, onArrived) {
       return;
     }
 
-    const step = Math.min(0.06, dist);
+    const step = Math.min(0.047, dist);
     dir.normalize().scaleInPlace(step);
     avatar.root.position.addInPlace(dir);
 
@@ -71,7 +71,7 @@ function setAvatarBodyColor(avatar, state) {
 }
 
 // ── Show a speech bubble for N ms ─────────────────────────────────────────
-export function speak(avatar, text, duration = 4500) {
+export function speak(avatar, text, duration = 5000) {
   avatar.bubbleText.text = text;
   avatar.bubble.isVisible = true;
 

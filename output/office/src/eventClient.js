@@ -206,12 +206,12 @@ function handleEvent(event, avatarMap, debugLights) {
         cancelAgent('anders');
         setAvatarState(anders, 'working');
         const delegateLine = DELEGATE_LINES[event.agentId] ?? `${avatar.agentDef.role} — on it.`;
-        speak(anders, delegateLine, 4000);
+        speak(anders, delegateLine, 4500);
         feedSay(anders.agentDef, delegateLine);
         activeDoneTimers['anders'] = setTimeout(() => {
           setAvatarState(anders, 'idle');
           delete activeDoneTimers['anders'];
-        }, 4200);
+        }, 4700);
       }
       break;
     }
@@ -232,7 +232,7 @@ function handleEvent(event, avatarMap, debugLights) {
 
       const deliverReport = () => {
         setAvatarState(avatar, 'idle');
-        speak(avatar, doneLine, 5000);
+        speak(avatar, doneLine, 5500);
         feedSay(avatar.agentDef, doneLine);
 
         // Anders acks with a specific line
@@ -240,9 +240,9 @@ function handleEvent(event, avatarMap, debugLights) {
           const ackLine = ACK_LINES[event.agentId] ?? 'Good work. Stand by.';
           activeDoneTimers[`${event.agentId}_ack`] = setTimeout(() => {
             delete activeDoneTimers[`${event.agentId}_ack`];
-            speak(anders, ackLine, 4000);
+            speak(anders, ackLine, 4500);
             feedSay(anders.agentDef, ackLine);
-          }, 1500);
+          }, 2000);
         }
 
         // Walk home after done line finishes
@@ -255,7 +255,7 @@ function handleEvent(event, avatarMap, debugLights) {
             });
             activeWalkCancels[event.agentId] = cancelHome;
           }
-        }, 5500);
+        }, 7000);
       };
 
       if (waypoint) {
@@ -292,6 +292,64 @@ function handleEvent(event, avatarMap, debugLights) {
         delete activeWalkCancels[event.agentId];
       });
       activeWalkCancels[event.agentId] = cancel;
+      break;
+    }
+
+    case 'strategy-meeting': {
+      // event: { agents: ['anders','researcher',...], lines: ['text by agent[0]','text by agent[1]',...] }
+      const agentIds = event.agents || [];
+      const lines    = event.lines  || [];
+      if (agentIds.length === 0) break;
+
+      // Seats evenly spaced around the table — start from south (closest to Anders' desk)
+      const TABLE_X  = 4, TABLE_Z = 3, SEAT_R = 3.8;
+      const n        = agentIds.length;
+      const seats    = agentIds.map((_, i) => {
+        const angle = (i / n) * Math.PI * 2 + Math.PI / 2; // south-first
+        return { x: TABLE_X + Math.cos(angle) * SEAT_R, z: TABLE_Z + Math.sin(angle) * SEAT_R };
+      });
+
+      // Walk all agents to their seats simultaneously
+      agentIds.forEach((id, i) => {
+        const a = avatarMap[id];
+        if (!a) return;
+        cancelAgent(id);
+        setAvatarState(a, 'working');
+        feedAction(a.agentDef, 'Heading to strategy meeting');
+        const cancelWalk = walkTo(a, seats[i].x, seats[i].z, () => {
+          delete activeWalkCancels[id];
+        });
+        activeWalkCancels[id] = cancelWalk;
+      });
+
+      // Speak lines in sequence — first line after travel delay, then one per slot
+      const TRAVEL_MS  = 4500;  // generous time for all to arrive
+      const PER_LINE_MS = 7500; // gap between speakers
+      lines.forEach((line, i) => {
+        const speakerId = agentIds[i % agentIds.length];
+        const a         = avatarMap[speakerId];
+        if (!a) return;
+        setTimeout(() => {
+          speak(a, line, 6500);
+          feedSay(a.agentDef, line);
+        }, TRAVEL_MS + i * PER_LINE_MS);
+      });
+
+      // After all lines finish, agents return to their home desks
+      const returnAt = TRAVEL_MS + lines.length * PER_LINE_MS + 2000;
+      agentIds.forEach((id) => {
+        const a    = avatarMap[id];
+        const home = HOME[id];
+        if (!a || !home) return;
+        setTimeout(() => {
+          feedAction(a.agentDef, 'Returning to desk');
+          setAvatarState(a, 'idle');
+          const cancelHome = walkTo(a, home.x, home.z, () => {
+            delete activeWalkCancels[id];
+          });
+          activeWalkCancels[id] = cancelHome;
+        }, returnAt);
+      });
       break;
     }
   }
