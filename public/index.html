@@ -692,6 +692,41 @@
       overflow: hidden;
     }
 
+    .hero__fullscreen-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 10;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-md, 8px);
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .hero__fullscreen-btn:hover {
+      background: rgba(0, 0, 0, 0.8);
+      transform: scale(1.08);
+    }
+
+    .hero__fullscreen-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .hero__visual-inner {
       position: relative;
       width: 100%;
@@ -1343,8 +1378,12 @@
         </div>
         <p class="hero__micro reveal">Built with Babylon.js + Claude Code. No smoke. No mirrors.</p>
       </div>
-      <div class="hero__visual reveal" aria-label="Live 3D virtual office built with Babylon.js">
-        <iframe src="http://192.168.254.128:5173" title="Agentic Agency — Live 3D Office" style="width:100%;height:100%;border:none;border-radius:var(--radius-lg);" loading="lazy" allow="accelerometer"></iframe>
+      <div class="hero__visual reveal" id="office-container" aria-label="Live 3D virtual office built with Babylon.js">
+        <button class="hero__fullscreen-btn" id="fullscreen-btn" aria-label="Toggle fullscreen" title="Toggle fullscreen">
+          <svg id="fs-icon-expand" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          <svg id="fs-icon-shrink" viewBox="0 0 24 24" style="display:none"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        </button>
+        <iframe src="http://192.168.254.128:5173" title="Agentic Agency — Live 3D Office" style="width:100%;height:100%;border:none;border-radius:var(--radius-lg);" loading="lazy" allow="accelerometer; fullscreen"></iframe>
       </div>
     </section>
 
@@ -1864,6 +1903,32 @@
           toggle.setAttribute('aria-label', 'Open navigation menu');
         });
       });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var container = document.getElementById('office-container');
+      var btn = document.getElementById('fullscreen-btn');
+      var iconExpand = document.getElementById('fs-icon-expand');
+      var iconShrink = document.getElementById('fs-icon-shrink');
+
+      function updateIcons() {
+        var isFs = document.fullscreenElement === container;
+        iconExpand.style.display = isFs ? 'none' : 'block';
+        iconShrink.style.display = isFs ? 'block' : 'none';
+        btn.setAttribute('aria-label', isFs ? 'Exit fullscreen' : 'Enter fullscreen');
+      }
+
+      btn.addEventListener('click', function () {
+        if (document.fullscreenElement === container) {
+          document.exitFullscreen();
+        } else {
+          container.requestFullscreen();
+        }
+      });
+
+      document.addEventListener('fullscreenchange', updateIcons);
     })();
   </script>
 </body>
