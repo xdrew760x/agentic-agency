@@ -14,7 +14,25 @@
       "Bash(lsof -ti:5173)",
       "Bash(lsof -ti:4001)",
       "WebSearch",
-      "WebFetch(domain:www.anthropic.com)"
+      "WebFetch(domain:www.anthropic.com)",
+      "WebFetch(domain:devin.ai)",
+      "WebFetch(domain:www.crewai.com)",
+      "WebFetch(domain:flowiseai.com)",
+      "WebFetch(domain:dribbble.com)",
+      "WebFetch(domain:magicui.design)",
+      "WebFetch(domain:unicornplatform.com)",
+      "WebFetch(domain:fibr.ai)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:cursor.com)",
+      "WebFetch(domain:www.saasframe.io)",
+      "WebFetch(domain:www.landingpageflow.com)",
+      "WebFetch(domain:adera-ai.com)",
+      "Bash(python3:*)",
+      "Bash(ipconfig getifaddr:*)",
+      "Bash(xargs kill:*)",
+      "Bash(lsof -ti:8080)",
+      "Bash(ls:*)",
+      "Bash(git mv:*)"
     ]
   }
 }

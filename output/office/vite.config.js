@@ -8,6 +8,7 @@ export default defineConfig({
     target: 'esnext',
   },
   server: {
+    open: false,
     host: '0.0.0.0',
     proxy: {
       // Proxy /api/* → office event server on :5174

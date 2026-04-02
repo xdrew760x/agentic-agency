@@ -187,8 +187,8 @@
 
   /* Content widths */
   --width-content:     768px;     /* prose/text content max     */
-  --width-wide:        1100px;    /* card grids, features       */
-  --width-full:        1400px;    /* hero, full-bleed sections  */
+  --width-wide:        1600px;    /* card grids, features       */
+  --width-full:        1920px;    /* hero, full-bleed sections  */
 
 
   /* ==========================================================================
