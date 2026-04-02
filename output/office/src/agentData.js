@@ -167,9 +167,10 @@ export const ROOMS = {
   },
 };
 
-// ── Demo activity sequences ────────────────────────────────────────────────
+// ── Demo activity sequences (kept for reference — not auto-played) ─────────
+// Avatars now respond to live Claude agent activity via the event server.
 // Actions: speak, think, walkTo, setState, feedAction
-export const DEMO_SEQUENCES = [
+const DEMO_SEQUENCES = [
   {
     trigger: 2000,
     events: [

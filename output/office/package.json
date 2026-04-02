@@ -10,7 +10,8 @@
   "dependencies": {
     "@babylonjs/core": "^7.0.0",
     "@babylonjs/gui": "^7.0.0",
-    "@babylonjs/materials": "^7.0.0"
+    "@babylonjs/materials": "^7.0.0",
+    "express": "^4.22.1"
   },
   "devDependencies": {
     "vite": "^5.0.0"

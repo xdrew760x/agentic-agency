@@ -1,0 +1,40 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "async": true,
+            "statusMessage": "Starting office servers...",
+            "command": "$dir = 'C:\\Users\\xDrew760x\\Documents\\projects\\agentic-agency\\output\\office'; if (-not (Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue)) { Start-Process powershell -WindowStyle Minimized -ArgumentList \"-NoProfile -Command `\"Set-Location '$dir'; npm run dev`\"\" }; if (-not (Get-NetTCPConnection -LocalPort 5174 -ErrorAction SilentlyContinue)) { Start-Process powershell -WindowStyle Minimized -ArgumentList \"-NoProfile -Command `\"Set-Location '$dir'; node event-server.js`\"\" }; Start-Sleep -Seconds 2; Start-Process 'http://localhost:5173'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "node '/c/Users/xDrew760x/Documents/projects/agentic-agency/output/office/hooks/pre-tool-use.cjs'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "async": true,
+            "command": "node '/c/Users/xDrew760x/Documents/projects/agentic-agency/output/office/hooks/post-tool-use.cjs'"
+          }
+        ]
+      }
+    ]
+  }
+}

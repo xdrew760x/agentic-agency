@@ -1,14 +1,13 @@
 import { AdvancedDynamicTexture } from '@babylonjs/gui';
-import { AGENTS, DEMO_SEQUENCES }          from './agentData.js';
-import { createScene }                     from './scene.js';
-import { buildOffice }                     from './office.js';
+import { AGENTS }                           from './agentData.js';
+import { createScene }                      from './scene.js';
+import { buildOffice }                      from './office.js';
 import { buildFurniture, buildWorkstation } from './furniture.js';
 import { createAvatar, hexToColor3 }        from './avatar.js';
 import {
-  walkTo, speak, setAvatarState,
   buildStatusPanel, showInfoCard,
-  feedSay, feedThink, feedAction,
 } from './behaviors.js';
+import { connectEventStream } from './eventClient.js';
 
 // ── Bootstrap ─────────────────────────────────────────────────────────────
 const canvas = document.getElementById('renderCanvas');
@@ -52,42 +51,10 @@ AGENTS.forEach(agentDef => {
 // Build the DOM status panel
 buildStatusPanel(AGENTS);
 
-// ── Demo sequence runner ───────────────────────────────────────────────────
-DEMO_SEQUENCES.forEach(seq => {
-  setTimeout(() => {
-    seq.events.forEach(ev => {
-      const avatar  = avatarMap[ev.agentId];
-      if (!avatar) return;
-      const agentDef = avatar.agentDef;
-
-      switch (ev.action) {
-        case 'speak':
-          speak(avatar, ev.text);
-          feedSay(agentDef, ev.text);
-          break;
-
-        case 'think':
-          feedThink(agentDef, ev.text);
-          break;
-
-        case 'feedAction':
-          feedAction(agentDef, ev.text);
-          break;
-
-        case 'walkTo':
-          walkTo(avatar, ev.pos.x, ev.pos.z, () => {
-            setAvatarState(avatar, 'idle');
-          });
-          setAvatarState(avatar, 'walking');
-          break;
-
-        case 'setState':
-          setAvatarState(avatar, ev.state);
-          break;
-      }
-    });
-  }, seq.trigger);
-});
+// ── Live event stream ──────────────────────────────────────────────────────
+// Connects to the office event server (via Vite proxy /api/events).
+// Avatars animate in real time as Claude delegates to subagents.
+connectEventStream(avatarMap);
 
 // ── Double-click a floor area → focus camera on that room ─────────────────
 scene.onPointerObservable.add(evt => {
