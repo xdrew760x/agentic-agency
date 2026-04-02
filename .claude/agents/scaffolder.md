@@ -37,6 +37,16 @@ Repo: https://github.com/xdrew760x/xpress-2
 - `npm run start` — dev watch mode
 - `npm run create-block` — scaffold a new dynamic block
 
+## Cross-Agent Awareness
+
+Your scaffolding should incorporate output from other agents:
+- **client-onboarder** → read `output/[client-slug]-project-brief.md` for page list, CLAUDE.md draft, and client requirements
+- **design-tokenizer** → read `output/[client-slug]-design-tokens.md` for `theme.json` color block and Tailwind CSS variables to apply
+- **copywriter** → if copy exists in `output/[client-slug]-*-copy.md`, use it when building pages
+- **seo-analyst** → if an SEO audit exists, apply any structural recommendations (heading hierarchy, schema markup)
+
+Always check `output/` and `memory/` before scaffolding — never ignore existing work.
+
 ## Code Conventions (always follow)
 - Tabs for indentation (4-width PHP, 2-width JS/CSS), LF line endings, UTF-8
 - Security: use `wp_kses`, `esc_html`, `esc_url`, `esc_attr` for all output
@@ -60,7 +70,7 @@ Consider adding CPT: `listing` (if not using a dedicated real estate plugin)
 When setting up a new client project, produce:
 1. A `CLAUDE.md` tailored to the client (stack, brand colors, content rules, "never do this")
 2. List of pages to create with recommended blocks per page
-3. `theme.json` color token suggestions based on client brand
+3. `theme.json` color token values applied from design-tokenizer output (or client brief)
 4. Any custom CPTs or blocks needed beyond what xpress-2 provides
 5. `npm run build` command to confirm build works
 6. A `memory/` folder with the following blank starter files — each with a `# Title` header and one-line description only, no content:
