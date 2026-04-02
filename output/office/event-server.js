@@ -1,5 +1,5 @@
 // ── Office Event Server ────────────────────────────────────────────────────
-// Tiny Express SSE server on port 5174.
+// Tiny Express SSE server on port 4001.
 // Accepts POST /agent-event from Claude Code hooks.
 // Streams events to the browser via GET /events (SSE).
 
@@ -36,6 +36,6 @@ app.post('/agent-event', (req, res) => {
   res.json({ ok: true, clients: clients.size });
 });
 
-app.listen(5174, () =>
-  console.log('[office-events] listening on http://localhost:5174'),
+app.listen(4001, () =>
+  console.log('[office-events] listening on http://localhost:4001'),
 );

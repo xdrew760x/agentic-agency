@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Read(//c/Users/xDrew760x/AppData/Roaming/npm/**)",
+      "Read(//c/Users/xDrew760x/.nvm/versions/**)",
+      "Skill(update-config)",
+      "Bash(npm run:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git config:*)",
+      "Bash(git push:*)",
+      "WebSearch",
+      "Bash(Get-NetTCPConnection -LocalPort 5174 -ErrorAction SilentlyContinue)",
+      "Bash(Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue)",
+      "Bash(curl:*)",
+      "Bash(node event-server.js)"
+    ]
+  }
+}

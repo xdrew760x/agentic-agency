@@ -11,7 +11,7 @@ export default defineConfig({
     proxy: {
       // Proxy /api/* → office event server on :5174
       '/api': {
-        target:  'http://localhost:5174',
+        target:  'http://localhost:4001',
         rewrite: path => path.replace(/^\/api/, ''),
       },
     },

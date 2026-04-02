@@ -32,7 +32,7 @@ async function main() {
   if (!agentId) return;
 
   try {
-    await fetch('http://localhost:5174/agent-event', {
+    await fetch('http://localhost:4001/agent-event', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({ type: 'agent-done', agentId }),

@@ -8,7 +8,7 @@
             "shell": "powershell",
             "async": true,
             "statusMessage": "Starting office servers...",
-            "command": "$dir = 'C:\\Users\\xDrew760x\\Documents\\projects\\agentic-agency\\output\\office'; if (-not (Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue)) { Start-Process powershell -WindowStyle Minimized -ArgumentList \"-NoProfile -Command `\"Set-Location '$dir'; npm run dev`\"\" }; if (-not (Get-NetTCPConnection -LocalPort 5174 -ErrorAction SilentlyContinue)) { Start-Process powershell -WindowStyle Minimized -ArgumentList \"-NoProfile -Command `\"Set-Location '$dir'; node event-server.js`\"\" }; Start-Sleep -Seconds 2; Start-Process 'http://localhost:5173'"
+            "command": "$dir = 'C:\\Users\\xDrew760x\\Documents\\projects\\agentic-agency\\output\\office'; if (-not (Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue)) { Start-Process powershell -WindowStyle Minimized -ArgumentList \"-NoProfile -Command `\"Set-Location '$dir'; npm run dev`\"\" }; if (-not (Get-NetTCPConnection -LocalPort 4001 -ErrorAction SilentlyContinue)) { Start-Process powershell -WindowStyle Minimized -ArgumentList \"-NoProfile -Command `\"Set-Location '$dir'; node event-server.js`\"\" }; Start-Sleep -Seconds 2; Start-Process 'http://localhost:5173'"
           }
         ]
       }
