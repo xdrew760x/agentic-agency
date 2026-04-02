@@ -294,7 +294,7 @@ export function buildWhiteboard(scene) {
   // Place on south wall (zMin = -11), facing north into the room
   const { cx: mcx, zMin } = LAYOUT.meeting;
   const board = MeshBuilder.CreatePlane('whiteboard', { width: 7, height: 3.5 }, scene);
-  board.position.set(mcx, 3.6, zMin + 0.18);
+  board.position.set(mcx, 3.6, zMin + 0.55);
   board.rotation.y = Math.PI; // face north (into room)
   board.material   = boardMat;
 
@@ -302,7 +302,7 @@ export function buildWhiteboard(scene) {
   const frameMat = new StandardMaterial('wb_frame_mat', scene);
   frameMat.diffuseColor = new Color3(0.13, 0.13, 0.18);
   const frame = MeshBuilder.CreateBox('wb_frame_mesh', { width: 7.5, height: 4.0, depth: 0.12 }, scene);
-  frame.position.set(mcx, 3.6, zMin + 0.12);
+  frame.position.set(mcx, 3.6, zMin + 0.45);
   frame.material = frameMat;
 
   return { board, boardTex };
