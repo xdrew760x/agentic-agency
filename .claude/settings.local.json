@@ -33,7 +33,12 @@
       "Bash(lsof -ti:8080)",
       "Bash(ls:*)",
       "Bash(git mv:*)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "WebFetch(domain:nextechsystems.github.io)",
+      "WebFetch(domain:www.nextech.com)",
+      "WebFetch(domain:help.nextpatient.co)",
+      "WebFetch(domain:www.keragon.com)",
+      "WebFetch(domain:www.nextpatient.co)"
     ]
   }
 }

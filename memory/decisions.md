@@ -19,3 +19,4 @@ Log important architectural or workflow decisions here so future sessions have c
 | 2026-04-02 | Token efficiency: Haiku for light agents, parallel independent agents | Email Writer, Image Prompter, Onboarder, Tokenizer use Haiku; parallelize when no dependency |
 | 2026-04-02 | Session start opens landing page (port 8080) not office directly | Landing page at public/index.html served via npx serve; office runs on :5173 as iframe inside it |
 | 2026-04-02 | Welcome message shows LAN URL | Detects en0 IP so anyone on WiFi can access the landing page |
+| 2026-04-02 | Created /demo slash command for office avatar demo | `.claude/commands/demo.md` — fires real events to office event server to animate avatars through a full project pipeline (strategy meeting → researcher → copywriter → SEO) |

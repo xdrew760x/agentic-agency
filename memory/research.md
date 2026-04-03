@@ -4,6 +4,14 @@ Pointers to research reports in `output/` and key takeaways worth remembering ac
 
 ---
 
+## Nextech API Integration for Custom Booking Form — April 2026
+**Report:** `output/nextech-api-integration-report.md`
+**Widget report:** `output/nextpatient-widget-research.md`
+**Core finding:** Nextech exposes two FHIR STU3 REST APIs (Select and Practice+) with OAuth 2.0 auth via Azure AD. Slot availability, appointment creation, and inline prospect creation are all supported. Daily limit of 1,000 API calls is a major constraint. NextPatient is the endorsed embeddable widget alternative — script tag embed, quote-based pricing, requires demo with sales. BAA required, backend proxy mandatory for HIPAA compliance.
+**Agency implication:** Custom booking form is technically feasible but requires serverless backend proxy, careful rate limit management, and BAA execution. NextPatient widget is the faster path — practice must activate via Nextech Community Portal, then we embed a script tag. User has not yet decided which route to take.
+
+---
+
 ## Claude / Anthropic — April 2026
 **Report:** `output/claude-news-report.md`
 **Core finding:** Opus 4.6 dropped 66% in price ($5/$25/M tokens), 1M token context. Mythos model leaked — autonomous cybersecurity capabilities, no public release. Anthropic dropped core safety pledge (RSP v3.0). $100M partner network launched.
